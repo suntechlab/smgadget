@@ -73,11 +73,10 @@ export function MainMenu() {
     <NavigationMenu viewport={false}>
       <NavigationMenuList>
         {pages.map((page: { title: string; href: string }, index: number) => (
-          <NavigationMenuItem>
+          <NavigationMenuItem key={index}>
             <NavigationMenuLink
               asChild
-              className={navigationMenuTriggerStyle()}
-              key={index}
+              className={navigationMenuTriggerStyle()}              
             >
               <Link href="/docs">{page.title}</Link>
             </NavigationMenuLink>
