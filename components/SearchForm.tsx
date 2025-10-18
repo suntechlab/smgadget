@@ -1,16 +1,21 @@
-import { SearchIcon } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
-import { Input } from "@/components/ui/input"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { SearchIcon } from "lucide-react";
 
 export function SearchForm() {
   return (
-    <ButtonGroup>
-      <Input placeholder="Search..." />
-      <Button variant="outline" aria-label="Search">
+    <InputGroup className="h-11 max-w-md">
+      <InputGroupInput placeholder="Type here to search..." />
+      <InputGroupAddon>
         <SearchIcon />
-      </Button>
-    </ButtonGroup>
-  )
+      </InputGroupAddon>
+      <InputGroupAddon align="inline-end">
+        <InputGroupButton>Search</InputGroupButton>
+      </InputGroupAddon>
+    </InputGroup>
+  );
 }

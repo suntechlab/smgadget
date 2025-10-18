@@ -1,14 +1,19 @@
 "use client";
 import { UseContext } from "@/context";
-import { ShoppingCartIcon } from "lucide-react";
+import { ShoppingCartIcon, SearchIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-export const BadgeCart = () => {
+export const ButtonCart = () => {
   const { handleSetOpen, cart } = UseContext();
   return (
     <div className="relative w-fit">
-      <Button onClick={handleSetOpen} variant="outline" size="icon" className="relative">
+      <Button
+        onClick={handleSetOpen}
+        size={"icon"}
+        variant={"outline"}
+        className="relative"
+      >
         <ShoppingCartIcon className="size-5" />
         <Badge
           variant="destructive"
@@ -18,5 +23,13 @@ export const BadgeCart = () => {
         </Badge>
       </Button>
     </div>
+  );
+};
+export const ButtonSearch = () => {
+  const { handleSetSearch } = UseContext();
+  return (
+    <Button onClick={handleSetSearch} variant={"ghost"} size={"icon"}>
+      <SearchIcon className="size-5" />
+    </Button>
   );
 };

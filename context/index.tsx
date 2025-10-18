@@ -24,7 +24,9 @@ interface CartItem {
 
 interface ContextProps {
   open: boolean;
+  openSearch: boolean;
   handleSetOpen: VoidFunction;
+  handleSetSearch: VoidFunction;
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
@@ -45,9 +47,11 @@ const ContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
+  const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const handleSetOpen = useCallback(() => setOpen((prev) => !prev), []);
+  const handleSetSearch = useCallback(() => setOpenSearch((prev) => !prev), []);
 
   const addToCart = (item: CartItem) => {
     setCart((prevCart) => {
@@ -78,13 +82,15 @@ const ContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const contextValue = useMemo<ContextProps>(
     () => ({
       open,
+      openSearch,
       handleSetOpen,
+      handleSetSearch,
       cart,
       addToCart,
       removeFromCart,
       updateQuantity,
     }),
-    [open, handleSetOpen, cart, addToCart, removeFromCart, updateQuantity]
+    [open, openSearch, handleSetOpen, handleSetSearch, cart, addToCart, removeFromCart, updateQuantity]
   );
 
   return (
