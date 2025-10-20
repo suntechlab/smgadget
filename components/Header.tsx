@@ -13,9 +13,8 @@ export function Header() {
     <header className="bg-background sticky top-0 z-40 w-full py-4">
       <div className="mx-auto max-w-screen-xl 2xl:max-w-screen-2xl px-4 xl:px-8">
         <div className="hidden items-center justify-between gap-2 md:flex">
-          <Link className="flex items-center" href={"/"}>
-            <span className="text-rose-500"><FaShoppingCart size={24}/></span>
-            <span className="font-black text-xl">SM<span className="text-rose-500">GADGET</span></span>
+          <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>
+            <FaShoppingCart className="text-rose-500" size={24}/>SM
           </Link>
           <MainMenu />
           <div className="flex gap-2">
@@ -28,9 +27,8 @@ export function Header() {
         <div className="flex items-center justify-between md:hidden">
           <div className="flex items-center gap-2">
             <MobileMenu />
-          <Link className="flex items-center" href={"/"}>
-            <span className="text-rose-500"><FaShoppingCart size={24}/></span>
-            <span className="font-black text-xl">SM<span className="text-rose-500">GADGET</span></span>
+          <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>
+            <FaShoppingCart className="text-rose-500" size={24}/>SM
           </Link>
           </div>
           <div className="flex min-[400px]:gap-2">

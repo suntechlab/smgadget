@@ -50,9 +50,8 @@ export function MobileMenu() {
       <DrawerContent>
         <DrawerHeader className="border-b">
           <div className="flex justify-between">
-          <Link className="flex items-center" href={"/"}>
-            <span className="text-rose-500"><FaShoppingCart size={24}/></span>
-            <span className="font-black text-xl">SM<span className="text-rose-500">GADGET</span></span>
+          <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>
+            <FaShoppingCart className="text-rose-500" size={24}/>SM
           </Link>
             <DrawerClose asChild className="cursor-pointer">
               <Button variant="outline" size={"icon"}>
