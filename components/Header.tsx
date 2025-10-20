@@ -1,8 +1,6 @@
 import Link from "next/link";
 
 import { MainMenu } from "@/components/MainMenu";
-// import Image from "next/image";
-// import Logo from "@/public/logo.png";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ModeToggle } from "@/components/ModeToggle";
 import { UserDropdown } from "@/components/UserDropdown";
@@ -16,7 +14,6 @@ export function Header() {
       <div className="mx-auto max-w-screen-xl 2xl:max-w-screen-2xl px-4 xl:px-8">
         <div className="hidden items-center justify-between gap-2 md:flex">
           <Link className="flex items-center" href={"/"}>
-            {/* <Image src={Logo} alt="Logo" /> */}
             <span className="text-rose-500"><FaShoppingCart size={24}/></span>
             <span className="font-black text-xl">SM<span className="text-rose-500">GADGET</span></span>
           </Link>
@@ -32,7 +29,6 @@ export function Header() {
           <div className="flex items-center gap-2">
             <MobileMenu />
           <Link className="flex items-center" href={"/"}>
-            {/* <Image src={Logo} alt="Logo" /> */}
             <span className="text-rose-500"><FaShoppingCart size={24}/></span>
             <span className="font-black text-xl">SM<span className="text-rose-500">GADGET</span></span>
           </Link>

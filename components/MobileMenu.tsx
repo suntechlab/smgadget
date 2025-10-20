@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Menu, XIcon } from "lucide-react";
-// import Logo from "@/public/logo.png";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -52,7 +51,6 @@ export function MobileMenu() {
         <DrawerHeader className="border-b">
           <div className="flex justify-between">
           <Link className="flex items-center" href={"/"}>
-            {/* <Image src={Logo} alt="Logo" /> */}
             <span className="text-rose-500"><FaShoppingCart size={24}/></span>
             <span className="font-black text-xl">SM<span className="text-rose-500">GADGET</span></span>
           </Link>
