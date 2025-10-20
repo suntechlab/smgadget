@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Menu, XIcon } from "lucide-react";
+import Logo from "@/public/logo.png";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -20,6 +21,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { FaShoppingCart } from "react-icons/fa";

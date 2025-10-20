@@ -10,13 +10,14 @@ export const ButtonCart = () => {
     <div className="relative w-fit">
       <Button
         onClick={handleSetOpen}
+        size={"icon"}
         variant={"ghost"}
         className="relative"
       >
         <ShoppingCartIcon className="size-5" />
         <Badge
           variant="destructive"
-          className="absolute -top-0.5 -right-0.5 size-5 rounded-full px-1 tabular-nums"
+          className="absolute -top-0.5 -right-0.5 h-5 min-w-5 rounded-full px-1 tabular-nums"
         >
           {cart.length}
         </Badge>
