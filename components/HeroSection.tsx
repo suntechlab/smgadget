@@ -37,7 +37,7 @@ export function HeroSection() {
 
   return (
     <section>
-      <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
+      <div className="mx-auto max-w-screen-xl 2xl:max-w-screen-2xl px-4 xl:px-8">
     <Carousel
       plugins={[plugin.current,Fade()]}
       onMouseEnter={plugin.current.stop}
@@ -53,7 +53,7 @@ export function HeroSection() {
               <h1>{item.title}</h1>
             </div>
             <Image
-              className="aspect-4/3 sm:aspect-2/1 object-cover rounded-xl"
+              className="aspect-4/3 sm:aspect-9/4 object-cover rounded-xl"
               src={item.image}
               alt={item.title}
               width={1500}

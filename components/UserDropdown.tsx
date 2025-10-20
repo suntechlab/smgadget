@@ -21,7 +21,7 @@ export function UserDropdown() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size={"icon"}><User2Icon className="size-5"/></Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="start">
+      <DropdownMenuContent className="w-56" align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem>

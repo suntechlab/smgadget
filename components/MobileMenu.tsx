@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Menu, XIcon } from "lucide-react";
-import Logo from "@/public/logo.png";
+// import Logo from "@/public/logo.png";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -21,10 +21,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-
+import { FaShoppingCart } from "react-icons/fa";
 export function MobileMenu() {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
@@ -45,19 +44,21 @@ export function MobileMenu() {
     <Drawer direction="top" open={isOpen} onOpenChange={setIsOpen} autoFocus={true}>
       <DrawerTrigger asChild className="cursor-pointer">
         <Button variant={"outline"} size={"icon"}>
-          <Menu className="size-6" />
+          <Menu className="size-5" />
           <span className="sr-only">Menu</span>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="border-b">
           <div className="flex justify-between">
-            <Link className="flex items-center gap-1 w-20" href={"/"}>
-              <Image src={Logo} alt="Logo" />
-            </Link>
+          <Link className="flex items-center" href={"/"}>
+            {/* <Image src={Logo} alt="Logo" /> */}
+            <span className="text-rose-500"><FaShoppingCart size={24}/></span>
+            <span className="font-black text-xl">SM<span className="text-rose-500">GADGET</span></span>
+          </Link>
             <DrawerClose asChild className="cursor-pointer">
               <Button variant="outline" size={"icon"}>
-                <XIcon />
+                <XIcon className="size-5" />
               </Button>
             </DrawerClose>
           </div>
