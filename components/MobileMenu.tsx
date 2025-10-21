@@ -44,7 +44,7 @@ export function MobileMenu() {
   return (
     <Drawer direction="top" open={isOpen} onOpenChange={setIsOpen} autoFocus={true}>
       <DrawerTrigger asChild className="cursor-pointer">
-        <Button variant={"outline"} size={"icon"}>
+        <Button variant={"ghost"} size={"icon"}>
           <Menu className="size-5" />
           <span className="sr-only">Menu</span>
         </Button>
@@ -56,7 +56,7 @@ export function MobileMenu() {
             <FaShoppingCart className="text-rose-500" size={24}/>SM
           </Link>
             <DrawerClose asChild className="cursor-pointer">
-              <Button variant="outline" size={"icon"}>
+              <Button variant="ghost" size={"icon"}>
                 <XIcon className="size-5" />
               </Button>
             </DrawerClose>

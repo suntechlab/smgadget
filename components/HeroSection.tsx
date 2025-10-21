@@ -53,7 +53,7 @@ export function HeroSection() {
               <h1>{item.title}</h1>
             </div>
             <Image
-              className="aspect-4/3 sm:aspect-2/1 object-cover rounded-xl"
+              className="aspect-4/3 sm:aspect-7/3 object-cover"
               src={item.image}
               alt={item.title}
               width={1500}

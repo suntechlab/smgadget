@@ -14,29 +14,27 @@ export function Header() {
   return (
     <header className="bg-background sticky top-0 z-40 w-full py-4">
       <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
-        <div className="hidden items-center justify-between gap-2 min-[920px]:flex">
+        <div className="hidden items-center justify-between gap-2 md:flex">
           <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>
             <FaShoppingCart className="text-rose-500" size={24}/>SM
           </Link>
           <MainMenu />
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <ButtonSearch/>            
             <ModeToggle />
             <UserDropdown/>
               <ButtonCart/>                     
           </div>
         </div>
-        <div className="flex items-center justify-between min-[920px]:hidden">
-          <div className="flex items-center gap-2">
-            <MobileMenu />
+        <div className="flex items-center justify-between md:hidden">
           <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>
             <FaShoppingCart className="text-rose-500" size={24}/>SM
           </Link>
-          </div>
-          <div className="flex gap-2">
+          <div className="flex gap-0.5 min-[340px]:gap-1">
             <ButtonSearch/> 
             <ModeToggle />
-            <ButtonCart/>          
+            <ButtonCart/>            
+            <MobileMenu />         
           </div>
         </div>
         <SearchModal/>
