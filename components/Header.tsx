@@ -21,9 +21,9 @@ export function Header() {
           <MainMenu />
           <div className="flex gap-3">
             <ButtonSearch/>            
-            <ModeToggle />
-            <UserDropdown/>
-              <ButtonCart/>                     
+            <ModeToggle />            
+              <ButtonCart/>
+              <UserDropdown/>                    
           </div>
         </div>
         <div className="flex items-center justify-between md:hidden">
@@ -31,9 +31,9 @@ export function Header() {
             <FaShoppingCart className="text-rose-500" size={24}/>SM
           </Link>
           <div className="flex gap-0.5 min-[340px]:gap-1">
-            <ButtonSearch/> 
-            <ModeToggle />
-            <ButtonCart/>            
+            <ButtonSearch/>            
+            <ButtonCart/>
+            <UserDropdown/>         
             <MobileMenu />         
           </div>
         </div>

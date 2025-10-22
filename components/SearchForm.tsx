@@ -8,7 +8,7 @@ import { SearchIcon } from "lucide-react";
 
 export function SearchForm() {
   return (
-    <InputGroup className="h-11 max-w-md">
+    <InputGroup className="h-9 md:h-11 max-w-md">
       <InputGroupInput placeholder="Type here to search..." />
       <InputGroupAddon>
         <SearchIcon />

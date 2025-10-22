@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { Menu, XIcon } from "lucide-react";
-import Logo from "@/public/logo.png";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -21,10 +20,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { FaShoppingCart } from "react-icons/fa";
+import { ModeSwitch } from "./ModeSwitch";
 export function MobileMenu() {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
@@ -114,12 +113,7 @@ export function MobileMenu() {
           </Link>
         </div>
         <DrawerFooter>
-          <Button asChild>
-            <Link href={"#"}>Sign Up</Link>
-          </Button>
-          <Button asChild variant={"outline"}>
-            <Link href={"#"}>Sign In</Link>
-          </Button>
+          <ModeSwitch/>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

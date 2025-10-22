@@ -72,16 +72,16 @@ export function MainMenu() {
           <NavigationMenuItem key={index}>
             <NavigationMenuLink
               asChild
-              className={navigationMenuTriggerStyle()}              
+              className={navigationMenuTriggerStyle()}
             >
               <Link href="/docs">{page.title}</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         ))}
-                <NavigationMenuItem>
+        <NavigationMenuItem>
           <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+            <ul className="w-[200px]">
               {components.map((component) => (
                 <ListItem
                   key={component.title}
