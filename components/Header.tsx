@@ -12,7 +12,7 @@ import { CartModal } from "@/components/CartModal";
 import { FaShoppingCart } from "react-icons/fa";
 export function Header() {
   return (
-    <header className="bg-background sticky top-0 z-40 w-full py-4">
+    <header className="bg-background sticky top-0 z-40 w-full py-2 md:py-4 border-b">
       <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
         <div className="hidden items-center justify-between gap-2 md:flex">
           <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>

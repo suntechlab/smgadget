@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'tailwindcss.com'
       },
+      {
+        protocol: 'https',
+        hostname: 'i.dummyjson.com'
+      },
     ],
   },
 };

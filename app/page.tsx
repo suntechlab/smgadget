@@ -3,13 +3,25 @@ import ProductCard from "@/components/ProductCard";
 import { Data } from "@/lib/Data";
 export default function Home() {
   return (
-      <main>
-        <HeroSection/>
-        <section className="py-12">
-          <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
-            <ProductCard product={Data.products[0]} />
+    <main>
+      <HeroSection />
+      <section className="py-6 md:py-12">
+        <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
+          <div className="max-w-xl mx-auto text-center mb-6 md:mb-8">
+            <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
+            <p className="text-sm text-muted-foreground">
+              Discover our most popular gadgets, carefully selected for their
+              quality, innovation, and unbeatable value. Each product comes with
+              our satisfaction guarantee.
+            </p>
           </div>
-        </section>
-      </main>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {Data.products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
