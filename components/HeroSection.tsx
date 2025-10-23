@@ -50,7 +50,6 @@ export function HeroSection() {
             {slider.map((item, index) => (
               <CarouselItem
                 key={index}
-                className="relative flex justify-center items-center"
               >
                 {/* <div className="absolute size-full p-4 md:p-8">
                   <div className="max-w-2xl space-y-4">
@@ -66,8 +65,8 @@ export function HeroSection() {
                   className="rounded-lg"
                   src={item.image}
                   alt={item.title}
-                  width={1500}
-                  height={1000}
+                  width={1920}
+                  height={960}
                 />
               </CarouselItem>
             ))}
