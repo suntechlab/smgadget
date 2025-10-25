@@ -1,8 +1,8 @@
-import { Product } from "@/types";
+import { Products } from "@/types";
 
 
-export async function getProducts(): Promise<Product[]> {
-    const res = await fetch("https://api.escuelajs.co/api/v1/products");
-    const data = await res.json();
-    return data;
+export async function getProducts(): Promise<Products> {
+  const response = await fetch('https://dummyjson.com/products');
+  const data: Products = await response.json();
+  return data;
 }
