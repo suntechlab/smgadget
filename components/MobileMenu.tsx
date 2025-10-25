@@ -49,7 +49,7 @@ export function MobileMenu() {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="border-b">
+        <DrawerHeader className="border-b py-2">
           <div className="flex justify-between">
           <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>
             <FaShoppingCart className="text-rose-500" size={24}/>SM

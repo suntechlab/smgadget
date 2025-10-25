@@ -28,7 +28,7 @@ export default async function Home() {
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {products.map((product) => (
+            {products.slice(0, 24).map((product) => (
               <Card
                 key={product.id}
                 className="flex flex-col justify-between pt-0 shadow-none"

@@ -51,6 +51,26 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'picsum.photos'
       },
+      {
+        protocol: 'https',
+        hostname: 'pravatar.cc'
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.tenor.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'steamcdn-a.akamaihd.net'
+      },
+      {
+        protocol: 'https',
+        hostname: 'stickershop.line-scdn.net'
+      },
+      {
+        protocol: 'https',
+        hostname: 'media2.dev.to'
+      },
     ],
   },
 };
