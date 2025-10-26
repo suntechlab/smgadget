@@ -1,5 +1,5 @@
 "use client";
-import { UseContext } from "@/context";
+import { useCartStore } from "@/lib/store";
 import {
   Sheet,
   SheetContent,
@@ -9,9 +9,10 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { SearchForm } from "./SearchForm";
 export function SearchModal() {
-  const { openSearch, handleSetSearch } = UseContext();
+  const isOpenSearch = useCartStore(state => state.isOpenSearch);
+  const toggleSearch = useCartStore(state => state.toggleSearch);
   return (
-    <Sheet open={openSearch} onOpenChange={handleSetSearch}>
+    <Sheet open={isOpenSearch} onOpenChange={toggleSearch}>
       <SheetContent side="top" className="items-center p-5">
           <VisuallyHidden asChild>
             <SheetTitle>Start typing and press enter to search</SheetTitle>

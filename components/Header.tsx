@@ -1,8 +1,6 @@
 import Link from "next/link";
 
 import { MainMenu } from "@/components/MainMenu";
-import Image from "next/image";
-import Logo from "@/public/logo.png";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ModeToggle } from "@/components/ModeToggle";
 import { UserDropdown } from "@/components/UserDropdown";

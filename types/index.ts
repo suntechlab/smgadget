@@ -29,6 +29,7 @@ export interface Product {
   meta: Date;
   thumbnail: string;
   images: string[];
+  quantity?: number;
 }
 
 export interface Products {
