@@ -3,7 +3,6 @@ import { useCartStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -11,8 +10,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { CartCard } from "./Cards";
-import { CreditCardIcon, PackageIcon } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import Link from "next/link";
 
 export function CartModal() {
   const isOpenCart = useCartStore((state) => state.isOpenCart);
@@ -29,52 +27,38 @@ export function CartModal() {
           <SheetTitle>Shopping Cart</SheetTitle>
           <SheetDescription>{cart.length} items in your cart</SheetDescription>
         </SheetHeader>
-        <div className="px-4 space-y-6">
-          <ul className="space-y-4">
+        <div className="px-4 h-full overflow-y-auto">
+          <ul className="space-y-6">
             {cart.map((product) => (
               <CartCard key={product.id} product={product} />
             ))}
           </ul>
-          {cart.length > 0 && (
-            <Card>
-              <CardHeader className="px-4">
-                <CardTitle className="text-lg">Order Summary</CardTitle>
-              </CardHeader>
-              <CardContent className="px-4 space-y-4 pt-0">
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Subtotal</span>
-                    <span>{total.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Shipping</span>
-                    <span>0.00</span>
-                  </div>
-                  <div className="flex justify-between font-medium">
-                    <span>Total</span>
-                    <span>{total.toFixed(2)}</span>
-                  </div>
-                </div>
-                <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                  <PackageIcon size={16} />
-                  <span>Free shipping on orders over $200</span>
-                </div>
-                <button
-                  data-slot="button"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full"
-                >
-                  <CreditCardIcon size={16} />
-                  Checkout
-                </button>
-              </CardContent>
-            </Card>
-          )}
         </div>
-
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button variant="outline">Close</Button>
-          </SheetClose>
+        <SheetFooter className="border-t">
+          <div className="flex justify-between text-base font-medium text-gray-900">
+            <p>Subtotal</p>
+            <p>{total.toFixed(2)}</p>
+          </div>
+          <p className="mt-0.5 text-sm text-gray-500">
+            Shipping and taxes calculated at checkout.
+          </p>
+          <div className="mt-6">
+            <Button asChild className="w-full" size={"lg"}>
+              <Link href="#">Checkout</Link>
+            </Button>
+          </div>
+          <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+            <p>
+              or{" "}
+              <button
+                type="button"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Continue Shopping
+                <span aria-hidden="true"> &rarr;</span>
+              </button>
+            </p>
+          </div>
         </SheetFooter>
       </SheetContent>
     </Sheet>
