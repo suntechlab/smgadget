@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ContextProvider } from "@/context";
 import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -36,10 +35,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ContextProvider>
-            <Header />
-            {children}
-          </ContextProvider>
+          <Header />
+          {children}
         </ThemeProvider>
       </body>
     </html>
