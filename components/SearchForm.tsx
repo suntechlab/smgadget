@@ -1,3 +1,4 @@
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import {
   InputGroup,
   InputGroupAddon,
@@ -7,9 +8,28 @@ import {
 import { SearchIcon } from "lucide-react";
 
 export function SearchForm() {
+    const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  
+  function handleSearch(term: string) {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("query", term);
+    } else {
+      params.delete("query");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }
   return (
     <InputGroup className="h-9 md:h-11 max-w-md">
-      <InputGroupInput placeholder="Type here to search..." />
+      <InputGroupInput
+        onChange={(e) => {
+          handleSearch(e.target.value);
+        }}
+        defaultValue={searchParams.get('query')?.toString()}
+        placeholder="Type here to search..."
+      />
       <InputGroupAddon>
         <SearchIcon />
       </InputGroupAddon>

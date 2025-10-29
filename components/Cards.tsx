@@ -89,7 +89,7 @@ function CartCard({ product }: { product: Product }) {
       <div className="flex flex-col gap-4 h-auto min-[360]:gap-0 min-[360]:w-full">
       <CardHeader className="p-0">
         <CardTitle className="line-clamp-1">{product.title}</CardTitle>
-        <CardDescription className="line-clamp-1">{product.description.slice(0, 20)}</CardDescription>
+        <CardDescription>{product.category}</CardDescription>
         <CardAction>
           <Button
             variant={"ghost"}
