@@ -1,4 +1,5 @@
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 import {
   InputGroup,
   InputGroupAddon,
@@ -7,20 +8,23 @@ import {
 } from "@/components/ui/input-group";
 import { SearchIcon } from "lucide-react";
 
-export function SearchForm() {
+export function Search() {
     const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   
-  function handleSearch(term: string) {
+  const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
+    params.set("page", "1");
+
     if (term) {
       params.set("query", term);
     } else {
       params.delete("query");
     }
+
     replace(`${pathname}?${params.toString()}`);
-  }
+  }, 300);
   return (
     <InputGroup className="h-9 md:h-11 max-w-md">
       <InputGroupInput

@@ -7,7 +7,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { SearchForm } from "./SearchForm";
+import { Search } from "@/components/Search";
 export function SearchModal() {
   const isOpenSearch = useCartStore(state => state.isOpenSearch);
   const toggleSearch = useCartStore(state => state.toggleSearch);
@@ -20,7 +20,7 @@ export function SearchModal() {
           <VisuallyHidden asChild>
             <SheetDescription>Description here.</SheetDescription>
           </VisuallyHidden>
-          <SearchForm />
+          <Search />
       </SheetContent>
     </Sheet>
   );

@@ -74,7 +74,7 @@ export function MainMenu() {
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <Link href="/docs">{page.title}</Link>
+              <Link href={page.href}>{page.title}</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         ))}
