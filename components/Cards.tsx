@@ -42,7 +42,7 @@ function ProductCard({ product }: { product: Product }) {
           height={300}
           className="size-full object-cover rounded-tl-lg rounded-tr-lg"
         />
-        <CardTitle className="px-6 pt-6">{product.title}</CardTitle>
+        <CardTitle className="px-6 pt-6 line-clamp-1">{product.title}</CardTitle>
         <CardDescription className="flex items-center gap-2 px-6">
           <Badge variant="outline">EU38</Badge>
           <Badge variant="outline">Black and White</Badge>
@@ -61,7 +61,7 @@ function ProductCard({ product }: { product: Product }) {
         </Button>
       </CardHeader>
       <CardContent>
-        <p>{product.description.slice(0, 80)}</p>
+        <p className="line-clamp-2">{product.description.slice(0, 80)}</p>
       </CardContent>
       <CardFooter>
         <Button onClick={() => addToCart(product)}>
