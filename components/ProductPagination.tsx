@@ -11,6 +11,15 @@ import {
 } from "@/components/ui/pagination";
 
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -18,7 +27,7 @@ import {
 interface PaginationProps {
   pageCount: number;
 }
-export function ProductPagination({ pageCount }: Readonly<PaginationProps>) {
+function ProductPagination({ pageCount }: Readonly<PaginationProps>) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -148,3 +157,68 @@ export function ProductPagination({ pageCount }: Readonly<PaginationProps>) {
     </Pagination>
   );
 }
+
+function SelectRowsPerPage({pageSize}:{pageSize?:number}) {
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+  const handlePageSize = (term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("perpage", term);
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+  return (
+    <Select
+      onValueChange={(value) => handlePageSize(value)}
+      defaultValue={pageSize?.toString()}
+    >
+      <SelectTrigger className="w-full">
+        <SelectValue placeholder="Show Products" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem value="3">3 Show</SelectItem>
+          <SelectItem value="10">10 Show</SelectItem>
+          <SelectItem value="20">20 Show</SelectItem>
+          <SelectItem value="30">30 Show</SelectItem>
+          <SelectItem value="40">40 Show</SelectItem>
+          <SelectItem value="50">50 Show</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+}
+function SortByPrice() {
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+  const handleSort = (term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("price", term);
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+  return (
+    <Select
+      onValueChange={(value) => handleSort(value)}
+      defaultValue={'best-match'}
+    >
+      <SelectTrigger  className="w-full relative before:absolute before:-left-16 before:content-['Sort_By:']">
+        <SelectValue placeholder="Sort Products" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem value="best-match">Best Match</SelectItem>
+          <SelectItem value="asc">Price low to high</SelectItem>
+          <SelectItem value="dsc">Price high to low</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+}
+export { ProductPagination, SelectRowsPerPage, SortByPrice };
