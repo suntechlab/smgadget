@@ -1,282 +1,235 @@
-import { StarIcon } from "lucide-react";
+import {
+  Star,
+  Share2,
+  Minus,
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+  ShoppingBagIcon
+} from "lucide-react";
+
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import Link from "next/link";
-const product = {
-  name: "Basic Tee 6-Pack",
-  price: "$192",
-  href: "#",
-  breadcrumbs: [
-    { id: 1, name: "Men", href: "#" },
-    { id: 2, name: "Clothing", href: "#" },
-  ],
-  images: [
-    {
-      src: "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
-      alt: "Two each of gray, white, and black shirts laying flat.",
-    },
-    {
-      src: "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
-      alt: "Model wearing plain black basic tee.",
-    },
-    {
-      src: "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
-      alt: "Model wearing plain gray basic tee.",
-    },
-    {
-      src: "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-02-featured-product-shot.jpg",
-      alt: "Model wearing plain white basic tee.",
-    },
-  ],
-  colors: [
-    {
-      id: "white",
-      name: "White",
-      classes: "bg-white checked:outline-gray-400",
-    },
-    {
-      id: "gray",
-      name: "Gray",
-      classes: "bg-gray-200 checked:outline-gray-400",
-    },
-    {
-      id: "black",
-      name: "Black",
-      classes: "bg-gray-900 checked:outline-gray-900",
-    },
-  ],
-  sizes: [
-    { id: 1, name: "XXS", inStock: false },
-    { id: 2, name: "XS", inStock: true },
-    { id: 3, name: "S", inStock: true },
-    { id: 4, name: "M", inStock: true },
-    { id: 5, name: "L", inStock: true },
-    { id: 6, name: "XL", inStock: true },
-    { id: 7, name: "2XL", inStock: true },
-    { id: 8, name: "3XL", inStock: true },
-  ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-  highlights: [
-    "Hand cut and sewn locally",
-    "Dyed with our proprietary colors",
-    "Pre-washed & pre-shrunk",
-    "Ultra-soft 100% cotton",
-  ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
-};
-const reviews = { href: "#", average: 4, totalCount: 117 };
 
-export default function ProductDetails() {
+export default function ProductDetailPage() {
   return (
-    <div className="bg-white">
-      <div className="pt-6">
-        <nav aria-label="Breadcrumb">
-          <ol
-            role="list"
-            className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-          >
-            {product.breadcrumbs.map((breadcrumb) => (
-              <li key={breadcrumb.id}>
-                <div className="flex items-center">
-                  <a
-                    href={breadcrumb.href}
-                    className="mr-2 text-sm font-medium text-gray-900"
-                  >
-                    {breadcrumb.name}
-                  </a>
-                  <svg
-                    fill="currentColor"
-                    width={16}
-                    height={20}
-                    viewBox="0 0 16 20"
-                    aria-hidden="true"
-                    className="h-5 w-4 text-gray-300"
-                  >
-                    <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-                  </svg>
-                </div>
-              </li>
-            ))}
-            <li className="text-sm">
-              <a
-                href={product.href}
-                aria-current="page"
-                className="font-medium text-gray-500 hover:text-gray-600"
-              >
-                {product.name}
-              </a>
-            </li>
-          </ol>
-        </nav>
-
-        {/* Image gallery */}
-        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-8 lg:px-8">
-          <Image
-            alt={product.images[0].alt}
-            src={product.images[0].src}
-            className="row-span-2 aspect-3/4 size-full rounded-lg object-cover max-lg:hidden"
-            width={100}
-            height={100}
-          />
-          <Image
-            alt={product.images[1].alt}
-            src={product.images[1].src}
-            className="col-start-2 aspect-3/2 size-full rounded-lg object-cover max-lg:hidden"
-            width={100}
-            height={100}
-          />
-          <Image
-            alt={product.images[2].alt}
-            src={product.images[2].src}
-            className="col-start-2 row-start-2 aspect-3/2 size-full rounded-lg object-cover max-lg:hidden"
-            width={100}
-            height={100}
-          />
-          <Image
-            alt={product.images[3].alt}
-            src={product.images[3].src}
-            className="row-span-2 aspect-4/5 size-full object-cover sm:rounded-lg lg:aspect-3/4"
-            width={100}
-            height={100}
-          />
+    <div className="mx-auto max-w-7xl space-y-6 px-4 py-8">
+      <div className="flex items-start justify-between">
+        <div className="grid gap-2">
+          <div className="text-sm text-gray-500">Jacket</div>
+          <h1 className="text-3xl font-bold">Stonewind Trekker</h1>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-0.5">
+              <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+              <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+              <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+              <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+              <Star className="h-4 w-4 fill-gray-300 text-gray-300" />
+            </div>
+            <span className="text-sm text-gray-500">4.9</span>
+          </div>
+        </div>
+        <Button variant="ghost" size="icon" className="rounded-full">
+          <Share2 className="h-5 w-5" />
+          <span className="sr-only">Share</span>
+        </Button>
+      </div>
+      <Separator />
+      <div className="grid items-start gap-8 md:grid-cols-2 lg:gap-12">
+        {/* Image Gallery Section */}
+        <div className="grid gap-4 md:grid-cols-[100px_1fr] lg:grid-cols-[120px_1fr]">
+          {/* Thumbnail Images */}
+          <div className="hidden flex-col gap-4 md:flex">
+            <button className="overflow-hidden rounded-lg border transition-colors hover:border-gray-900 dark:hover:border-gray-50">
+              <Image
+                src="https://placehold.co/600x400?text=01"
+                alt="Product thumbnail 1"
+                className="aspect-4/3 object-cover"
+                width={500}
+                height={500}
+              />
+              <span className="sr-only">View Image 1</span>
+            </button>
+            <button className="overflow-hidden rounded-lg border transition-colors hover:border-gray-900 dark:hover:border-gray-50">
+              <Image
+                src="https://placehold.co/600x400?text=02"
+                alt="Product thumbnail 2"
+                className="aspect-4/3 object-cover"
+                width={500}
+                height={500}
+              />
+              <span className="sr-only">View Image 2</span>
+            </button>
+            <button className="overflow-hidden rounded-lg border transition-colors hover:border-gray-900 dark:hover:border-gray-50">
+              <Image
+                src="https://placehold.co/600x400?text=03"
+                alt="Product thumbnail 3"
+                className="aspect-4/3 object-cover"
+                width={500}
+                height={500}
+              />
+              <span className="sr-only">View Image 3</span>
+            </button>
+            <button className="overflow-hidden rounded-lg border transition-colors hover:border-gray-900 dark:hover:border-gray-50">
+              <Image
+                src="https://placehold.co/600x400?text=04"
+                alt="Product thumbnail 4"
+                className="aspect-4/3 object-cover"
+                width={500}
+                height={500}
+              />
+              <span className="sr-only">View Image 4</span>
+            </button>
+          </div>
+          {/* Main Product Image */}
+          <div className="relative">
+            <Image
+              src="https://placehold.co/600x400?text=01"
+              alt="Stonewind Trekker Jacket"
+              className="aspect-4/3 h-[410px] w-full rounded-lg border object-cover"
+              width={500}
+              height={500}
+            />
+            <div className="absolute top-4 left-4 rounded-full bg-red-500 px-3 py-1 text-xs font-medium text-white">
+              New Arrival
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-1/2 left-4 -translate-y-1/2 rounded-full bg-white/80 hover:bg-white">
+              <ChevronLeft className="h-5 w-5" />
+              <span className="sr-only">Previous image</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-1/2 right-4 -translate-y-1/2 rounded-full bg-white/80 hover:bg-white">
+              <ChevronRight className="h-5 w-5" />
+              <span className="sr-only">Next image</span>
+            </Button>
+          </div>
         </div>
 
-        {/* Product info */}
-        <div className="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto_auto_1fr] lg:gap-x-8 lg:px-8 lg:pt-16 lg:pb-24">
-          <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-              {product.name}
-            </h1>
+        {/* Product Details Section */}
+        <div className="grid gap-6">
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-bold">$99.29</span>
+            <span className="text-lg text-gray-500 line-through">$102.97</span>
           </div>
+          <div className="text-sm text-gray-500">498 products sold out</div>
 
-          {/* Options */}
-          <div className="mt-4 lg:row-span-3 lg:mt-0">
-            <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">
-              {product.price}
-            </p>
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="color" className="text-base font-medium">
+                Color (Ocean Blue)
+              </Label>
+              <RadioGroup id="color" defaultValue="ocean-blue" className="flex items-center gap-3">
+                <Label
+                  htmlFor="color-ocean-blue"
+                  className="relative cursor-pointer rounded-full border-2 border-transparent data-[state=checked]:border-gray-900">
+                  <RadioGroupItem id="color-ocean-blue" value="ocean-blue" className="sr-only" />
+                  <Image
+                    src="https://placehold.co/600x400?text=01"
+                    alt="Ocean Blue color"
+                    className="aspect-square w-20 rounded-md object-cover"
+                    width={500}
+                    height={500}
+                  />
+                  <span className="sr-only">Ocean Blue</span>
+                </Label>
+                <Label
+                  htmlFor="color-black"
+                  className="relative cursor-pointer rounded-full border-2 border-transparent data-[state=checked]:border-gray-900">
+                  <RadioGroupItem id="color-black" value="black" className="sr-only" />
+                  <Image
+                    src="https://placehold.co/600x400?text=02"
+                    alt="Black color"
+                    className="aspect-square w-20 rounded-md object-cover"
+                    width={500}
+                    height={500}
+                  />
+                  <span className="sr-only">Black</span>
+                </Label>
+              </RadioGroup>
+            </div>
 
-            {/* Reviews */}
-            <div className="mt-6">
-              <h3 className="sr-only">Reviews</h3>
-              <div className="flex items-center">
-                <div className="flex items-center">
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <StarIcon key={rating} aria-hidden="true" />
-                  ))}
+            <div className="grid gap-2">
+              <Label htmlFor="size" className="text-base font-medium">
+                Size
+                <a href="#" className="ml-2 text-sm text-gray-500 hover:underline">
+                  Size Guide
+                </a>
+              </Label>
+              <RadioGroup id="size" defaultValue="m" className="flex items-center gap-2">
+                <Label
+                  htmlFor="size-s"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white text-sm font-medium ring-offset-white hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 focus-visible:outline-none data-[state=checked]:bg-gray-900 data-[state=checked]:text-gray-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300 dark:data-[state=checked]:bg-gray-50 dark:data-[state=checked]:text-gray-900">
+                  <RadioGroupItem id="size-s" value="s" className="sr-only" />S
+                </Label>
+                <Label
+                  htmlFor="size-m"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white text-sm font-medium ring-offset-white hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 focus-visible:outline-none data-[state=checked]:bg-gray-900 data-[state=checked]:text-gray-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300 dark:data-[state=checked]:bg-gray-50 dark:data-[state=checked]:text-gray-900">
+                  <RadioGroupItem id="size-m" value="m" className="sr-only" />M
+                </Label>
+                <Label
+                  htmlFor="size-l"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white text-sm font-medium ring-offset-white hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 focus-visible:outline-none data-[state=checked]:bg-gray-900 data-[state=checked]:text-gray-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300 dark:data-[state=checked]:bg-gray-50 dark:data-[state=checked]:text-gray-900">
+                  <RadioGroupItem id="size-l" value="l" className="sr-only" />L
+                </Label>
+                <Label
+                  htmlFor="size-xl"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white text-sm font-medium ring-offset-white hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 focus-visible:outline-none data-[state=checked]:bg-gray-900 data-[state=checked]:text-gray-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300 dark:data-[state=checked]:bg-gray-50 dark:data-[state=checked]:text-gray-900">
+                  <RadioGroupItem id="size-xl" value="xl" className="sr-only" />
+                  XL
+                </Label>
+                <Label
+                  htmlFor="size-2xl"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white text-sm font-medium ring-offset-white hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 focus-visible:outline-none data-[state=checked]:bg-gray-900 data-[state=checked]:text-gray-50 dark:border-gray-800 dark:bg-gray-950 dark:ring-offset-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300 dark:data-[state=checked]:bg-gray-50 dark:data-[state=checked]:text-gray-900">
+                  <RadioGroupItem id="size-2xl" value="2xl" className="sr-only" />
+                  2XL
+                </Label>
+              </RadioGroup>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="composition" className="text-base font-medium">
+                Composition
+              </Label>
+              <p className="text-sm text-gray-500">
+                Premium Fabric Blend: 70% Merino Wool & 30% Acrylic
+              </p>
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="quantity" className="text-base font-medium">
+                Quantity
+              </Label>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="icon" className="h-8 w-8 bg-transparent">
+                  <Minus className="h-4 w-4" />
+                  <span className="sr-only">Decrease quantity</span>
+                </Button>
+                <div className="flex h-8 w-12 items-center justify-center rounded-md border border-gray-200 bg-white text-sm font-medium dark:border-gray-800 dark:bg-gray-950">
+                  1
                 </div>
-                <p className="sr-only">{reviews.average} out of 5 stars</p>
-                <Link
-                  href={reviews.href}
-                  className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  {reviews.totalCount} reviews
-                </Link>
+                <Button variant="outline" size="icon" className="h-8 w-8 bg-transparent">
+                  <Plus className="h-4 w-4" />
+                  <span className="sr-only">Increase quantity</span>
+                </Button>
               </div>
             </div>
 
-            <form className="mt-10">
-              {/* Colors */}
-              <div>
-                <h3 className="text-sm font-medium text-gray-900">Color</h3>
-
-                <fieldset aria-label="Choose a color" className="mt-4">
-                  <div className="flex items-center gap-x-3">
-                    {product.colors.map((color) => (
-                      <div
-                        key={color.id}
-                        className="flex rounded-full outline -outline-offset-1 outline-black/10"
-                      >
-                        <input
-                          defaultValue={color.id}
-                          defaultChecked={color === product.colors[0]}
-                          name="color"
-                          type="radio"
-                          aria-label={color.name}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </fieldset>
-              </div>
-
-              {/* Sizes */}
-              <div className="mt-10">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                  <Link
-                    href="#"
-                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Size guide
-                  </Link>
-                </div>
-
-                <fieldset aria-label="Choose a size" className="mt-4">
-                  <div className="grid grid-cols-4 gap-3">
-                    {product.sizes.map((size: {id:number,name:string,inStock:boolean}) => (
-                      <label
-                        key={size.id}
-                        aria-label={size.name}
-                        className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-indigo-600 has-checked:bg-indigo-600 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-indigo-600 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
-                      >
-                        <input
-                          defaultValue={size.id}
-                          defaultChecked={size === product.sizes[2]}
-                          name="size"
-                          type="radio"
-                          disabled={!size.inStock}
-                          className="absolute inset-0 appearance-none focus:outline-none disabled:cursor-not-allowed"
-                        />
-                        <span className="text-sm font-medium text-gray-900 uppercase group-has-checked:text-white">
-                          {size.name}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </fieldset>
-              </div>
-
-              <button
-                type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
-              >
-                Add to bag
-              </button>
-            </form>
-          </div>
-
-          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pr-8 lg:pb-16">
-            {/* Description and details */}
-            <div>
-              <h3 className="sr-only">Description</h3>
-
-              <div className="space-y-6">
-                <p className="text-base text-gray-900">{product.description}</p>
-              </div>
-            </div>
-
-            <div className="mt-10">
-              <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
-
-              <div className="mt-4">
-                <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                  {product.highlights.map((highlight) => (
-                    <li key={highlight} className="text-gray-400">
-                      <span className="text-gray-600">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-10">
-              <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-              <div className="mt-4 space-y-6">
-                <p className="text-sm text-gray-600">{product.details}</p>
-              </div>
+            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <Button className="h-12 flex-1 text-lg">
+                <ShoppingBagIcon />
+                Add to Cart
+              </Button>
+              <Button className="h-12 flex-1 bg-[#D9FF66] text-lg text-gray-900 hover:bg-[#c6eb5e]">
+                Buy Now
+              </Button>
             </div>
           </div>
         </div>

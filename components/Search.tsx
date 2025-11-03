@@ -11,21 +11,7 @@ import { SearchIcon } from "lucide-react";
 
 export function Search() {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
 
-  const handleSearch = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", "1");
-
-    if (term) {
-      params.set("query", term);
-    } else {
-      params.delete("query");
-    }
-
-    replace(`${pathname}?${params.toString()}`);
-  }, 300);
   return (
     <Form action="/products" autoComplete="off">
       <InputGroup className="h-9 sm:h-11">

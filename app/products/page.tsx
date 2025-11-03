@@ -9,15 +9,15 @@ export default async function Products(props: {
   searchParams?: Promise<{
     query?: string;
     page?: string;
-    perpage?: string;
-    price?: string;
+    pagesize?: string;
+    orderby?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
-  const pageSize = Number(searchParams?.perpage) || 3;
-  const price = searchParams?.price;
+  const pageSize = Number(searchParams?.pagesize) || 3;
+  const price = searchParams?.orderby;
   const startIndex = (currentPage - 1) * pageSize;
   const { products } = await getProducts();
   const filter = products

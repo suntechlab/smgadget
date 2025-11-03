@@ -166,7 +166,7 @@ function SelectRowsPerPage({pageSize}:{pageSize?:number}) {
   const handlePageSize = (term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
-      params.set("perpage", term);
+      params.set("pagesize", term);
     }
     replace(`${pathname}?${params.toString()}`);
   };
@@ -199,14 +199,14 @@ function SortByPrice() {
   const handleSort = (term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
-      params.set("price", term);
+      params.set("orderby", term);
     }
     replace(`${pathname}?${params.toString()}`);
   };
   return (
     <Select
       onValueChange={(value) => handleSort(value)}
-      defaultValue={'best-match'}
+      defaultValue={searchParams.get("orderby")?.toString() || "best-match"}
     >
       <SelectTrigger  className="w-full relative before:absolute before:-left-16 before:content-['Sort_By:']">
         <SelectValue placeholder="Sort Products" />
