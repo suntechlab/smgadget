@@ -23,6 +23,8 @@ interface ProductStore {
   filteredProducts: Product[];
   selectedCategory: string;
   searchQuery: string;
+  sortOrderBy: string;
+  pageSize: string;
   priceRange: [number, number];
   selectedBrands: string[];
   selectedColors: string[];
@@ -32,6 +34,8 @@ interface ProductStore {
   // Actions
   setSelectedCategory: (category: string) => void;
   setSearchQuery: (query: string) => void;
+  setSortOrderBy: (orderby: string) => void;
+  setPageSize: (pagesize: string) => void;
   setPriceRange: (range: [number, number]) => void;
   toggleBrand: (brand: string) => void;
   toggleColor: (color: string) => void;
@@ -51,7 +55,7 @@ const sampleProducts: Product[] = [
     rating: 4.8,
     orders: 234,
     seller: "Apple Store Official",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: true,
     category: "phones",
     brand: "apple",
@@ -67,7 +71,7 @@ const sampleProducts: Product[] = [
     rating: 4.7,
     orders: 189,
     seller: "Samsung Official",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: true,
     category: "phones",
     brand: "samsung",
@@ -83,7 +87,7 @@ const sampleProducts: Product[] = [
     rating: 4.5,
     orders: 154,
     seller: "Huawei Technology Ltd",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: false,
     category: "phones",
     brand: "huawei",
@@ -99,7 +103,7 @@ const sampleProducts: Product[] = [
     rating: 4.9,
     orders: 456,
     seller: "Sony Electronics",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: true,
     category: "headsets",
     brand: "sony",
@@ -113,7 +117,7 @@ const sampleProducts: Product[] = [
     rating: 4.6,
     orders: 321,
     seller: "Bose Official Store",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: false,
     category: "headsets",
     brand: "bose",
@@ -129,7 +133,7 @@ const sampleProducts: Product[] = [
     rating: 4.8,
     orders: 89,
     seller: "Apple Store Official",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: true,
     category: "laptops",
     brand: "apple",
@@ -145,7 +149,7 @@ const sampleProducts: Product[] = [
     rating: 4.4,
     orders: 167,
     seller: "Dell Technologies",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: false,
     category: "laptops",
     brand: "dell",
@@ -159,7 +163,7 @@ const sampleProducts: Product[] = [
     rating: 4.3,
     orders: 134,
     seller: "Microsoft Store",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: false,
     category: "laptops",
     brand: "microsoft",
@@ -175,7 +179,7 @@ const sampleProducts: Product[] = [
     rating: 4.6,
     orders: 78,
     seller: "Samsung Electronics",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: true,
     category: "tv",
     brand: "samsung",
@@ -191,7 +195,7 @@ const sampleProducts: Product[] = [
     rating: 4.7,
     orders: 92,
     seller: "LG Electronics",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: true,
     category: "tv",
     brand: "lg",
@@ -207,7 +211,7 @@ const sampleProducts: Product[] = [
     rating: 4.5,
     orders: 267,
     seller: "JBL Official",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: false,
     category: "sound",
     brand: "jbl",
@@ -223,7 +227,7 @@ const sampleProducts: Product[] = [
     rating: 4.8,
     orders: 345,
     seller: "Apple Store Official",
-    image: "https://placehold.co/600x400?text=Image",
+    image: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     isNew: true,
     category: "watches",
     brand: "apple",
@@ -238,6 +242,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   filteredProducts: sampleProducts,
   selectedCategory: "all",
   searchQuery: "",
+  sortOrderBy: "",
+  pageSize: "",
   priceRange: [0, 3000],
   selectedBrands: [],
   selectedColors: [],
@@ -252,6 +258,14 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
   setSearchQuery: (query) => {
     set({ searchQuery: query });
+    get().applyFilters();
+  },
+  setSortOrderBy: (orderby) => {
+    set({ sortOrderBy: orderby });
+    get().applyFilters();
+  },
+  setPageSize: (pagesize) => {
+    set({ pageSize: pagesize });
     get().applyFilters();
   },
 
@@ -292,13 +306,17 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       products,
       selectedCategory,
       searchQuery,
+      sortOrderBy,
+      pageSize,
       priceRange,
       selectedBrands,
       selectedColors,
       deliveryDate
     } = get();
-
-    let filtered = products;
+    const pagesize = Number(pageSize)
+    const startIndex = (1 - 1) * pagesize;
+    // const pageCount = Math.ceil(products.length / pageSize);
+    let filtered = products.slice(startIndex, startIndex + pagesize).sort((a, b) => (a.price < b.price && sortOrderBy == "asc" || a.price > b.price && sortOrderBy == "dsc" ? -1 : 1));
 
     // Category filter
     if (selectedCategory !== "all") {
