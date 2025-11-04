@@ -24,9 +24,52 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Slider } from "@/components/ui/slider";
+import { useState } from "react";
 interface PaginationProps {
   pageCount: number;
 }
+
+const categories = [
+  { id: "all", label: "All", icon: "🏪" },
+  { id: "phones", label: "Phones", icon: "📱" },
+  { id: "headsets", label: "Headsets", icon: "🎧" },
+  { id: "laptops", label: "Laptops", icon: "💻" },
+  { id: "tv", label: "TV sets", icon: "📺" },
+  { id: "sound", label: "Sound", icon: "🔊" },
+  { id: "watches", label: "Watches", icon: "⌚" },
+  { id: "others", label: "Others", icon: "💡" },
+  { id: "internet", label: "Internet", icon: "🌐" },
+];
+
+const brands = [
+  { id: "apple", label: "Apple" },
+  { id: "samsung", label: "Samsung" },
+  { id: "huawei", label: "Huawei" },
+  { id: "microsoft", label: "Microsoft" },
+  { id: "sony", label: "Sony" },
+  { id: "bose", label: "Bose" },
+  { id: "dell", label: "Dell" },
+  { id: "lg", label: "LG" },
+  { id: "jbl", label: "JBL" },
+  { id: "philips", label: "Philips" },
+  { id: "tp-link", label: "TP-Link" },
+];
+
+const colors = [
+  { id: "red", label: "Red", color: "bg-red-500" },
+  { id: "orange", label: "Orange", color: "bg-orange-500" },
+  { id: "blue", label: "Blue", color: "bg-blue-500" },
+  { id: "black", label: "Black", color: "bg-black" },
+  { id: "white", label: "White", color: "bg-white border" },
+  { id: "purple", label: "Purple", color: "bg-purple-500" },
+  { id: "gray", label: "Gray", color: "bg-gray-600" },
+];
+
 function ProductPagination({ pageCount }: Readonly<PaginationProps>) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -158,7 +201,7 @@ function ProductPagination({ pageCount }: Readonly<PaginationProps>) {
   );
 }
 
-function SelectRowsPerPage({pageSize}:{pageSize?:number}) {
+function SelectRowsPerPage({ pageSize }: { pageSize?: number }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -175,8 +218,8 @@ function SelectRowsPerPage({pageSize}:{pageSize?:number}) {
       onValueChange={(value) => handlePageSize(value)}
       defaultValue={pageSize?.toString()}
     >
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="Show Products" />
+      <SelectTrigger className="w-[140px]">
+        <SelectValue placeholder="Show" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -204,21 +247,175 @@ function SortByPrice() {
     replace(`${pathname}?${params.toString()}`);
   };
   return (
-    <Select
-      onValueChange={(value) => handleSort(value)}
-      defaultValue={searchParams.get("orderby")?.toString() || "best-match"}
-    >
-      <SelectTrigger  className="w-full relative before:absolute before:-left-16 before:content-['Sort_By:']">
-        <SelectValue placeholder="Sort Products" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectItem value="best-match">Best Match</SelectItem>
-          <SelectItem value="asc">Price low to high</SelectItem>
-          <SelectItem value="dsc">Price high to low</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <div className="flex gap-1">
+      <Label>Sort by:</Label>
+      <Select
+        onValueChange={(value) => handleSort(value)}
+        defaultValue={searchParams.get("orderby")?.toString() || "relevance"}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Sort by" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectItem value="relevance">Relevance</SelectItem>
+            <SelectItem value="popularity">Popularity</SelectItem>
+            <SelectItem value="asc">Price low to high</SelectItem>
+            <SelectItem value="dsc">Price high to low</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
-export { ProductPagination, SelectRowsPerPage, SortByPrice };
+function FilterByCategory() {
+  return (
+    <div>
+      <h3 className="mb-3 font-semibold">Related categories</h3>
+      <RadioGroup>
+        <div className="space-y-2 text-sm">
+          {categories.map((category) => (
+            <div key={category.id} className="flex items-center space-x-2">
+              <RadioGroupItem
+                value={category.id}
+                id={`category-${category.id}`}
+              />
+              <Label
+                htmlFor={`category-${category.id}`}
+                className="cursor-pointer text-sm font-normal"
+              >
+                {category.label}
+              </Label>
+            </div>
+          ))}
+        </div>
+      </RadioGroup>
+    </div>
+  );
+}
+function FilterByBrand() {
+  return (
+    <div>
+      <h3 className="mb-3 font-semibold">Brands</h3>
+      <div className="max-h-48 space-y-3 overflow-y-auto">
+        {brands.map((brand) => (
+          <div key={brand.id} className="flex items-center space-x-2">
+            <Checkbox id={`brand-${brand.id}`} />
+            <Label
+              htmlFor={`brand-${brand.id}`}
+              className="cursor-pointer text-sm font-normal"
+            >
+              {brand.label}
+            </Label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FilterByPrice({ range }: { range: [number, number] }) {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const initialValue = Array.isArray(range) ? range : [range[0], range[1]];
+  const [priceRange, setPriceRange] = useState(initialValue);
+  const handlePriceRange = (range: [number, number]) => {
+    const min = String(range[0]);
+    const max = String(range[1]);
+    setPriceRange(range);
+    if (range) {
+      params.set("min", min);
+      params.set("max", max);
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+  return (
+    <div>
+      <h3 className="mb-3 font-semibold">Price</h3>
+      <div className="space-y-4">
+        <Slider
+          value={priceRange}
+          onValueChange={(value) => handlePriceRange([value[0], value[1]])}
+          max={3000}
+          step={10}
+          className="w-full"
+        />
+        <div className="flex items-center space-x-2">
+          <div className="flex-1">
+            <Label
+              htmlFor="price-from"
+              className="text-muted-foreground text-xs"
+            >
+              From
+            </Label>
+            <Input
+              id="price-from"
+              type="number"
+              value={priceRange[0]}
+              onChange={(e) => {
+                setPriceRange([
+                  Number.parseInt(e.target.value) || 0,
+                  priceRange[1],
+                ]);
+                params.set("min", e.target.value);
+                replace(`${pathname}?${params.toString()}`);
+              }}
+              className="h-8"
+            />
+          </div>
+          <div className="flex-1">
+            <Label htmlFor="price-to" className="text-muted-foreground text-xs">
+              To
+            </Label>
+            <Input
+              id="price-to"
+              type="number"
+              value={priceRange[1]}
+              onChange={(e) => {
+                setPriceRange([
+                  priceRange[0],
+                  Number.parseInt(e.target.value) || 3000,
+                ]);
+                params.set("max", e.target.value);
+                replace(`${pathname}?${params.toString()}`);
+              }}
+              className="h-8"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function FilterByColor() {
+  return (
+    <div>
+      <h3 className="mb-3 font-semibold">Colors</h3>
+      <div className="grid grid-cols-1 gap-2">
+        {colors.map((color) => (
+          <div key={color.id} className="flex items-center space-x-2">
+            <Checkbox id={`color-${color.id}`} />
+            <div className={`h-4 w-4 rounded ${color.color}`} />
+            <Label
+              htmlFor={`color-${color.id}`}
+              className="cursor-pointer text-sm font-normal"
+            >
+              {color.label}
+            </Label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+export {
+  ProductPagination,
+  SelectRowsPerPage,
+  SortByPrice,
+  FilterByCategory,
+  FilterByBrand,
+  FilterByPrice,
+  FilterByColor,
+};

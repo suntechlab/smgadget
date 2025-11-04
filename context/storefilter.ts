@@ -316,7 +316,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     const pagesize = Number(pageSize)
     const startIndex = (1 - 1) * pagesize;
     // const pageCount = Math.ceil(products.length / pageSize);
-    let filtered = products.slice(startIndex, startIndex + pagesize).sort((a, b) => (a.price < b.price && sortOrderBy == "asc" || a.price > b.price && sortOrderBy == "dsc" ? -1 : 1));
+    let filtered = products.sort((a, b) => (a.price < b.price && sortOrderBy == "asc" || a.price > b.price && sortOrderBy == "dsc" ? -1 : 1));
+    // let filtered = products.slice(startIndex, startIndex + pagesize).sort((a, b) => (a.price < b.price && sortOrderBy == "asc" || a.price > b.price && sortOrderBy == "dsc" ? -1 : 1));
 
     // Category filter
     if (selectedCategory !== "all") {
