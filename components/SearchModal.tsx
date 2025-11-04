@@ -12,7 +12,7 @@ export function SearchModal() {
   const isOpenSearch = useCartStore(state => state.isOpenSearch);
   const toggleSearch = useCartStore(state => state.toggleSearch);
   return (
-    <Sheet open={isOpenSearch} onOpenChange={toggleSearch}>
+    <Sheet open={isOpenSearch} onOpenChange={toggleSearch} modal={false}>
       <SheetContent side="top" className="items-center p-5">
           <VisuallyHidden asChild>
             <SheetTitle>Start typing and press enter to search</SheetTitle>
