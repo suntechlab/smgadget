@@ -16,8 +16,8 @@ export default async function Products(props: {
     page?: string;
     pagesize?: string;
     orderby?: string;
-    min?:string;
-    max?:string;
+    min?: string;
+    max?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -30,7 +30,12 @@ export default async function Products(props: {
   const startIndex = (currentPage - 1) * pageSize;
   const { products } = await getProducts();
   const filter = products
-    .filter((item) => item.title.toLowerCase().includes(query.toLowerCase()))
+    .filter(
+      (item) =>
+        item.title.toLowerCase().includes(query.toLowerCase()) &&
+        item.price >= min &&
+        item.price <= max
+    )
     .sort((a, b) =>
       (a.price < b.price && price == "asc") ||
       (a.price > b.price && price == "dsc")
@@ -40,19 +45,18 @@ export default async function Products(props: {
   const pageCount = Math.ceil(filter.length / pageSize);
   const paginate = filter.slice(startIndex, startIndex + pageSize);
 
-
   if (!products) return null;
   return (
     <div className="py-12">
       <div className="mx-auto max-w-screen-2xl flex flex-col gap-5 md:flex-row px-4 xl:px-8">
         <aside className="w-64 space-y-5">
+          <FilterByPrice range={[min, max]} />
+          <Separator />
           <FilterByCategory />
           <Separator />
           <FilterByBrand />
           <Separator />
           <FilterByColor />
-          <Separator />
-          <FilterByPrice range={[min,max]} />
         </aside>
         <main className="flex-1">
           <div className="flex justify-between mb-5">

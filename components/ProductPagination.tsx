@@ -297,7 +297,7 @@ function FilterByBrand() {
   return (
     <div>
       <h3 className="mb-3 font-semibold">Brands</h3>
-      <div className="max-h-48 space-y-3 overflow-y-auto">
+      <div className="space-y-3">
         {brands.map((brand) => (
           <div key={brand.id} className="flex items-center space-x-2">
             <Checkbox id={`brand-${brand.id}`} />
@@ -321,10 +321,9 @@ function FilterByPrice({ range }: { range: [number, number] }) {
   const pathname = usePathname();
   const initialValue = Array.isArray(range) ? range : [range[0], range[1]];
   const [priceRange, setPriceRange] = useState(initialValue);
-  const handlePriceRange = (range: [number, number]) => {
+  const handlePriceRange = (range: number[]) => {
     const min = String(range[0]);
     const max = String(range[1]);
-    setPriceRange(range);
     if (range) {
       params.set("min", min);
       params.set("max", max);
@@ -333,11 +332,12 @@ function FilterByPrice({ range }: { range: [number, number] }) {
   };
   return (
     <div>
-      <h3 className="mb-3 font-semibold">Price</h3>
+      <h3 className="mb-3 font-semibold">Price Range</h3>
       <div className="space-y-4">
         <Slider
           value={priceRange}
-          onValueChange={(value) => handlePriceRange([value[0], value[1]])}
+          onValueChange={(value) => setPriceRange([value[0], value[1]])}
+          onValueCommit={(value) => handlePriceRange([value[0], value[1]])}
           max={3000}
           step={10}
           className="w-full"
