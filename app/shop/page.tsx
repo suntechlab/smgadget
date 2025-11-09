@@ -10,7 +10,7 @@ import {
   SortByPrice,
 } from "@/components/ProductPagination";
 import { Separator } from "@/components/ui/separator";
-export default async function Products(props: {
+export default async function Shop(props: {
   searchParams?: Promise<{
     query?: string;
     page?: string;
@@ -63,7 +63,7 @@ export default async function Products(props: {
             <SelectRowsPerPage pageSize={pageSize} />
             <SortByPrice />
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {paginate.map((item) => (
               <ProductCard key={item.id} product={item} />
             ))}

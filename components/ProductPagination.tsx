@@ -269,10 +269,22 @@ function SortByPrice() {
   );
 }
 function FilterByCategory() {
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+    const handleCategory = (term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("cat", term);
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <div>
       <h3 className="mb-3 font-semibold">Related categories</h3>
-      <RadioGroup>
+      <RadioGroup onValueChange={(value)=> handleCategory(value)}>
         <div className="space-y-2 text-sm">
           {categories.map((category) => (
             <div key={category.id} className="flex items-center space-x-2">

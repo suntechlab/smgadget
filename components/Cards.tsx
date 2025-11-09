@@ -9,8 +9,6 @@ import {
   ShoppingCartIcon,
   Trash2Icon,
 } from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -32,39 +30,39 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Card
       key={product.id}
-      className="flex flex-col justify-between pt-0 shadow-none"
+      className="relative flex flex-col justify-between pt-0 shadow-none"
     >
-      <CardHeader className="relative p-0">
-        <Image
-          src={product.thumbnail}
-          alt={product.title}
-          width={300}
-          height={300}
-          className="size-full object-cover rounded-tl-lg rounded-tr-lg"
+      <Image
+        src={product.thumbnail}
+        alt={product.title}
+        width={300}
+        height={300}
+        className="size-3/4 mx-auto object-contain rounded-tl-lg rounded-tr-lg"
+      />
+      <Button
+        size={"icon"}
+        onClick={() => setLiked(!liked)}
+        className="bg-primary/10 hover:bg-primary/20 rounded-full absolute right-2 top-2"
+      >
+        <HeartIcon
+          className={cn(
+            "size-4",
+            liked ? "fill-destructive stroke-destructive" : "stroke-white"
+          )}
         />
+      </Button>
+      <CardHeader className="p-0">
         <CardTitle className="px-4 pt-4 line-clamp-1">
           {product.title}
         </CardTitle>
-        <CardDescription className="flex items-center gap-2 px-4">
-          <Badge variant="outline">EU38</Badge>
-          <Badge variant="outline">Black and White</Badge>
-        </CardDescription>
-        <Button
-          size={"icon"}
-          onClick={() => setLiked(!liked)}
-          className="bg-primary/10 hover:bg-primary/20 rounded-full absolute right-2 top-2"
-        >
-          <HeartIcon
-            className={cn(
-              "size-4",
-              liked ? "fill-destructive stroke-destructive" : "stroke-white"
-            )}
-          />
-        </Button>
       </CardHeader>
       <CardContent className="flex gap-2">
-        <ins className="font-semibold no-underline">Tk {product.price.toFixed(2)}</ins>
-        <del className="font-semibold text-muted-foreground">Tk {product.price.toFixed(2)}</del>
+        <ins className="font-semibold no-underline">
+          Tk {product.price.toFixed(2)}
+        </ins>
+        <del className="font-semibold text-muted-foreground">
+          Tk {product.price.toFixed(2)}
+        </del>
       </CardContent>
       <CardFooter>
         <Button onClick={() => addToCart(product)}>
