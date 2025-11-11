@@ -1,6 +1,7 @@
 import { getProducts } from "@/actions/products";
 import { ProductCard } from "@/components/Cards";
 import {
+  Filter,
   FilterByBrand,
   FilterByCategory,
   FilterByColor,
@@ -23,7 +24,7 @@ export default async function Shop(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
-  const pageSize = Number(searchParams?.pagesize) || 3;
+  const pageSize = Number(searchParams?.pagesize) || 8;
   const price = searchParams?.orderby;
   const min = Number(searchParams?.min) || 0;
   const max = Number(searchParams?.max) || 3000;
@@ -50,12 +51,10 @@ export default async function Shop(props: {
     <div className="py-12">
       <div className="mx-auto max-w-screen-2xl flex flex-col gap-5 md:flex-row px-4 xl:px-8">
         <aside className="w-64 space-y-5">
-          <FilterByPrice range={[min, max]} />
-          <Separator />
+          <Filter/>
           <FilterByCategory />
-          <Separator />
           <FilterByBrand />
-          <Separator />
+                    <FilterByPrice range={[min, max]} />
           <FilterByColor />
         </aside>
         <main className="flex-1">

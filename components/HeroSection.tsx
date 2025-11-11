@@ -36,7 +36,7 @@ export function HeroSection() {
   );
 
   return (
-    <section className="mt-6">
+    <section className="mt-5">
       <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
         <div className="grid grid-cols-10 gap-5">
           <div className="col-span-full lg:col-span-7 row-span-2">
