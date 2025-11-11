@@ -4,18 +4,10 @@ import { HeroSection } from "@/components/HeroSection";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRightIcon,
-  CableIcon,
-  EvChargerIcon,
-  HeadphonesIcon,
-  LaptopIcon,
   MessageCircleHeartIcon,
-  PowerIcon,
   RefreshCwIcon,
   RocketIcon,
   ShieldCheckIcon,
-  SmartphoneIcon,
-  SpeakerIcon,
-  TabletIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -113,7 +105,7 @@ export default async function Home() {
                 <span className="block">Apple iPhone 14 Plus</span>
                 <h3 className="text-4xl font-semibold">UP TO 30% OFF</h3>
                 <p>
-                  iPhone 14 has the same superspeedy chip that's in iPhone 13
+                  iPhone 14 has the same superspeedy chip that&apos;s in iPhone 13
                   Pro, A15 Bionic, with a 5‑core GPU, powers all the latest
                   features.
                 </p>

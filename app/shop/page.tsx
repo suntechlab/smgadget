@@ -10,7 +10,6 @@ import {
   SelectRowsPerPage,
   SortByPrice,
 } from "@/components/ProductPagination";
-import { Separator } from "@/components/ui/separator";
 export default async function Shop(props: {
   searchParams?: Promise<{
     query?: string;
