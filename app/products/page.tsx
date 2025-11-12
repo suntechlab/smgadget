@@ -16,8 +16,8 @@ export default async function Products(props: {
     page?: string;
     pagesize?: string;
     orderby?: string;
-    min?: string;
-    max?: string;
+    min?:string;
+    max?:string;
   }>;
 }) {
   const searchParams = await props.searchParams;
@@ -30,12 +30,7 @@ export default async function Products(props: {
   const startIndex = (currentPage - 1) * pageSize;
   const { products } = await getProducts();
   const filter = products
-    .filter(
-      (item) =>
-        item.title.toLowerCase().includes(query.toLowerCase()) &&
-        item.price >= min &&
-        item.price <= max
-    )
+    .filter((item) => item.title.toLowerCase().includes(query.toLowerCase()))
     .sort((a, b) =>
       (a.price < b.price && price == "asc") ||
       (a.price > b.price && price == "dsc")
@@ -44,6 +39,7 @@ export default async function Products(props: {
     );
   const pageCount = Math.ceil(filter.length / pageSize);
   const paginate = filter.slice(startIndex, startIndex + pageSize);
+
 
   if (!products) return null;
   return (
@@ -56,7 +52,7 @@ export default async function Products(props: {
           <Separator />
           <FilterByColor />
           <Separator />
-          <FilterByPrice range={[min, max]} />
+          <FilterByPrice range={[min,max]} />
         </aside>
         <main className="flex-1">
           <div className="flex justify-between mb-5">
