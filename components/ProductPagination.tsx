@@ -30,12 +30,12 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
+import { Button } from "./ui/button";
 interface PaginationProps {
   pageCount: number;
 }
 
 const categories = [
-  { id: "all", label: "All", icon: "🏪" },
   { id: "phones", label: "Phones", icon: "📱" },
   { id: "headsets", label: "Headsets", icon: "🎧" },
   { id: "laptops", label: "Laptops", icon: "💻" },
@@ -210,6 +210,7 @@ function SelectRowsPerPage({ pageSize }: { pageSize?: number }) {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set("pagesize", term);
+      params.delete("page")
     }
     replace(`${pathname}?${params.toString()}`);
   };
@@ -223,7 +224,7 @@ function SelectRowsPerPage({ pageSize }: { pageSize?: number }) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="3">3 Show</SelectItem>
+          <SelectItem value="8">8 Show</SelectItem>
           <SelectItem value="10">10 Show</SelectItem>
           <SelectItem value="20">20 Show</SelectItem>
           <SelectItem value="30">30 Show</SelectItem>
@@ -243,6 +244,7 @@ function SortByPrice() {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set("orderby", term);
+      params.delete("page")
     }
     replace(`${pathname}?${params.toString()}`);
   };
@@ -268,11 +270,38 @@ function SortByPrice() {
     </div>
   );
 }
+function Filter() {
+  const pathname = usePathname();
+const { replace } = useRouter();
+    const resetFilter = () => {
+      const newSearchParams = new URLSearchParams();
+      replace(`${pathname}?${newSearchParams.toString()}`);
+    };
+  return (
+    <div className="flex justify-between">
+      <Label className="text-base font-semibold">Filters</Label>
+      <Button variant={"outline"} onClick={resetFilter}>Reset</Button>
+    </div>
+  );
+}
 function FilterByCategory() {
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+    const handleCategory = (term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("cat", term);
+      params.delete("page")
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <div>
-      <h3 className="mb-3 font-semibold">Related categories</h3>
-      <RadioGroup>
+      <h3 className="mb-3 font-semibold">Categories</h3>
+      <RadioGroup onValueChange={(value)=> handleCategory(value)}>
         <div className="space-y-2 text-sm">
           {categories.map((category) => (
             <div key={category.id} className="flex items-center space-x-2">
@@ -297,7 +326,7 @@ function FilterByBrand() {
   return (
     <div>
       <h3 className="mb-3 font-semibold">Brands</h3>
-      <div className="max-h-48 space-y-3 overflow-y-auto">
+      <div className="space-y-3">
         {brands.map((brand) => (
           <div key={brand.id} className="flex items-center space-x-2">
             <Checkbox id={`brand-${brand.id}`} />
@@ -321,23 +350,24 @@ function FilterByPrice({ range }: { range: [number, number] }) {
   const pathname = usePathname();
   const initialValue = Array.isArray(range) ? range : [range[0], range[1]];
   const [priceRange, setPriceRange] = useState(initialValue);
-  const handlePriceRange = (range: [number, number]) => {
+  const handlePriceRange = (range: number[]) => {
     const min = String(range[0]);
     const max = String(range[1]);
-    setPriceRange(range);
     if (range) {
       params.set("min", min);
       params.set("max", max);
+      params.delete("page")
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`,{scroll:false});
   };
   return (
     <div>
-      <h3 className="mb-3 font-semibold">Price</h3>
+      <h3 className="mb-3 font-semibold">Price Range</h3>
       <div className="space-y-4">
         <Slider
           value={priceRange}
-          onValueChange={(value) => handlePriceRange([value[0], value[1]])}
+          onValueChange={(value) => setPriceRange([value[0], value[1]])}
+          onValueCommit={(value) => handlePriceRange([value[0], value[1]])}
           max={3000}
           step={10}
           className="w-full"
@@ -352,7 +382,6 @@ function FilterByPrice({ range }: { range: [number, number] }) {
             </Label>
             <Input
               id="price-from"
-              type="number"
               value={priceRange[0]}
               onChange={(e) => {
                 setPriceRange([
@@ -360,7 +389,7 @@ function FilterByPrice({ range }: { range: [number, number] }) {
                   priceRange[1],
                 ]);
                 params.set("min", e.target.value);
-                replace(`${pathname}?${params.toString()}`);
+                replace(`${pathname}?${params.toString()}`,{scroll:false});
               }}
               className="h-8"
             />
@@ -371,7 +400,6 @@ function FilterByPrice({ range }: { range: [number, number] }) {
             </Label>
             <Input
               id="price-to"
-              type="number"
               value={priceRange[1]}
               onChange={(e) => {
                 setPriceRange([
@@ -379,7 +407,7 @@ function FilterByPrice({ range }: { range: [number, number] }) {
                   Number.parseInt(e.target.value) || 3000,
                 ]);
                 params.set("max", e.target.value);
-                replace(`${pathname}?${params.toString()}`);
+                replace(`${pathname}?${params.toString()}`,{scroll:false});
               }}
               className="h-8"
             />
@@ -414,6 +442,7 @@ export {
   ProductPagination,
   SelectRowsPerPage,
   SortByPrice,
+  Filter,
   FilterByCategory,
   FilterByBrand,
   FilterByPrice,

@@ -18,8 +18,8 @@ const pages: { title: string; href: string }[] = [
     href: "/about",
   },
   {
-    title: "Products",
-    href: "/products",
+    title: "Shop",
+    href: "/shop",
   },
   {
     title: "Contact",

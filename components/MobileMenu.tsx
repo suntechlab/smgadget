@@ -68,8 +68,8 @@ export function MobileMenu() {
           </VisuallyHidden>
         </DrawerHeader>
         <div className="flex flex-col gap-4 p-4">
-          <Link href={"/"} className="text-sm font-medium">
-            Home
+          <Link href={"/shop"} className="text-sm font-medium">
+            Shop
           </Link>
           <Link href={"/about"} className="text-sm font-medium">
             About
@@ -77,21 +77,21 @@ export function MobileMenu() {
           <Accordion type="single" collapsible className="flex flex-col gap-4">
             <AccordionItem value="services" className="border-b-0">
               <AccordionTrigger className="py-0 cursor-pointer">
-                Services
+                Categories
               </AccordionTrigger>
               <AccordionContent className="flex flex-col gap-4 py-0 pl-2 mt-4">
                 <Link href={"#"} className="block">
-                  Web Design
+                  Mens
                 </Link>
                 <Link href={"#"} className="block">
-                  Web Development
+                  Womens
                 </Link>
                 <Link href={"#"} className="block">
-                  Speed Optimization
+                  Accessories
                 </Link>
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="products" className="border-b-0">
+            {/* <AccordionItem value="products" className="border-b-0">
               <AccordionTrigger className="py-0 cursor-pointer">
                 Products
               </AccordionTrigger>
@@ -106,7 +106,7 @@ export function MobileMenu() {
                   Android App
                 </Link>
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem> */}
           </Accordion>
           <Link href={"#"} className="text-sm font-medium">
             Contact
