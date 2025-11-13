@@ -249,8 +249,6 @@ function SortByPrice() {
     replace(`${pathname}?${params.toString()}`);
   };
   return (
-    <div className="flex gap-1">
-      <Label>Sort by:</Label>
       <Select
         onValueChange={(value) => handleSort(value)}
         defaultValue={searchParams.get("orderby")?.toString() || "relevance"}
@@ -267,10 +265,9 @@ function SortByPrice() {
           </SelectGroup>
         </SelectContent>
       </Select>
-    </div>
   );
 }
-function Filter() {
+function ResetFilter() {
   const pathname = usePathname();
 const { replace } = useRouter();
     const resetFilter = () => {
@@ -278,10 +275,7 @@ const { replace } = useRouter();
       replace(`${pathname}?${newSearchParams.toString()}`);
     };
   return (
-    <div className="flex justify-between">
-      <Label className="text-base font-semibold">Filters</Label>
       <Button variant={"outline"} onClick={resetFilter}>Reset</Button>
-    </div>
   );
 }
 function FilterByCategory() {
@@ -442,7 +436,7 @@ export {
   ProductPagination,
   SelectRowsPerPage,
   SortByPrice,
-  Filter,
+  ResetFilter,
   FilterByCategory,
   FilterByBrand,
   FilterByPrice,

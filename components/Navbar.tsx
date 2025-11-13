@@ -24,7 +24,10 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import Image from "next/image";
-import { FaShoppingCart } from "react-icons/fa";
+import { ButtonCart, ButtonSearch } from "./Buttons";
+import { ModeToggle } from "./ModeToggle";
+import { UserDropdown } from "./UserDropdown";
+import { ModeSwitch } from "./ModeSwitch";
 
 interface MenuItem {
   title: string;
@@ -34,7 +37,7 @@ interface MenuItem {
   items?: MenuItem[];
 }
 
-interface Navbar1Props {
+interface NavbarProps {
   logo?: {
     url: string;
     src: string;
@@ -54,10 +57,10 @@ interface Navbar1Props {
   };
 }
 
-const Navbar1 = ({
+const Navbar = ({
   logo = {
     url: "/",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+    src: "/logo.png",
     alt: "logo",
     title: "Shadcnblocks.com",
   },
@@ -137,90 +140,76 @@ const Navbar1 = ({
     login: { title: "Login", url: "#" },
     signup: { title: "Sign up", url: "#" },
   },
-}: Navbar1Props) => {
+}: NavbarProps) => {
   return (
     <header className="bg-background sticky top-0 z-40 w-full py-2 md:py-4 border-b">
       <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
         {/* Desktop Menu */}
-        <nav className="hidden items-center justify-between lg:flex">
-          <div className="flex items-center gap-6">
-            {/* Logo */}
-            {/* <Link href={logo.url} className="flex items-center gap-2">
-              <Image
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-                width={32}
-                height={32}
-              />
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
-            </Link> */}
-            <Link
-              className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500"
-              href={"/"}
-            >
-              <FaShoppingCart className="text-rose-500" size={24} />
-              SM
-            </Link>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
-          </div>
+        <nav className="hidden items-center justify-between gap-5 md:flex">
+          {/* Logo */}
+          <Link href={logo.url} className="flex items-center gap-2">
+            <Image
+              src={logo.src}
+              className="w-20 object-cover"
+              alt={logo.alt}
+              width={626}
+              height={222}
+            />
+          </Link>
+            <NavigationMenu>
+              <NavigationMenuList>
+                {menu.map((item) => renderMenuItem(item))}
+              </NavigationMenuList>
+            </NavigationMenu>
           <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.title}</a>
+            <ButtonSearch />
+            <ModeToggle />
+            <UserDropdown />
+            <ButtonCart />
+            {/* <Button asChild variant="outline" size="sm">
+              <Link href={auth.login.url}>{auth.login.title}</Link>
             </Button>
             <Button asChild size="sm">
-              <a href={auth.signup.url}>{auth.signup.title}</a>
-            </Button>
+              <Link href={auth.signup.url}>{auth.signup.title}</Link>
+            </Button> */}
           </div>
         </nav>
 
         {/* Mobile Menu */}
-        <div className="block lg:hidden">
+        <div className="block md:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            {/* <Link href={logo.url} className="flex items-center gap-2">
+            <Link href={logo.url} className="flex items-center gap-2">
               <Image
                 src={logo.src}
-                className="max-h-8 dark:invert"
+                className="w-20 object-cover"
                 alt={logo.alt}
-                width={32}
-                height={32}
+                width={626}
+                height={222}
               />
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
-            </Link> */}
-            <Link
-              className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500"
-              href={"/"}
-            >
-              <FaShoppingCart className="text-rose-500" size={24} />
-              SM
             </Link>
-            <Sheet>
+              <div className="flex items-center gap-2">
+                            <ButtonSearch />
+            <UserDropdown />
+            <ButtonCart />
+                            <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
-                  <Menu className="size-4" />
+                  <Menu className="size-5" />
                 </Button>
               </SheetTrigger>
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <img
+                    <Link href={logo.url} className="flex items-center gap-2">
+                      <Image
                         src={logo.src}
-                        className="max-h-8 dark:invert"
+                        className="w-20 object-cover"
                         alt={logo.alt}
+                        width={626}
+                        height={222}
                       />
-                    </a>
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
@@ -233,16 +222,18 @@ const Navbar1 = ({
                   </Accordion>
 
                   <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.title}</a>
+                    <ModeSwitch/>
+                    {/* <Button asChild variant="outline">
+                      <Link href={auth.login.url}>{auth.login.title}</Link>
                     </Button>
                     <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.title}</a>
-                    </Button>
+                      <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                    </Button> */}
                   </div>
                 </div>
               </SheetContent>
             </Sheet>
+              </div>
           </div>
         </div>
       </div>
@@ -303,7 +294,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
 
 const SubMenuLink = ({ item }: { item: MenuItem }) => {
   return (
-    <a
+    <Link
       className="hover:bg-muted hover:text-accent-foreground flex min-w-80 select-none flex-row gap-4 rounded-md p-3 leading-none no-underline outline-none transition-colors"
       href={item.url}
     >
@@ -316,8 +307,8 @@ const SubMenuLink = ({ item }: { item: MenuItem }) => {
           </p>
         )}
       </div>
-    </a>
+    </Link>
   );
 };
 
-export { Navbar1 };
+export { Navbar };

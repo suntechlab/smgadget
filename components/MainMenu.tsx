@@ -11,89 +11,122 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { Book, Sunset, Trees, Zap } from "lucide-react";
 
-const pages: { title: string; href: string }[] = [
-  {
-    title: "About",
-    href: "/about",
+const Navbar = {
+  logo:{
+    url: "/",
+    src: "/logo.png",
+    alt: "logo",
+    title: "Smgadgetbd",
   },
-  {
-    title: "Shop",
-    href: "/shop",
+  menu: [
+    { title: "Shop", url: "/shop" },
+    {
+      title: "Categories",
+      url: "#",
+      items: [
+        {
+          title: "Smart phone",
+          description: "The latest industry news, updates, and info",
+          icon: <Book className="size-5 shrink-0" />,
+          url: "#",
+        },
+        {
+          title: "Watch",
+          description: "Our mission is to innovate and empower the world",
+          icon: <Trees className="size-5 shrink-0" />,
+          url: "#",
+        },
+        {
+          title: "Careers",
+          description: "Browse job listing and discover our workspace",
+          icon: <Sunset className="size-5 shrink-0" />,
+          url: "#",
+        },
+        {
+          title: "Support",
+          description:
+            "Get in touch with our support team or visit our community forums",
+          icon: <Zap className="size-5 shrink-0" />,
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Resources",
+      url: "#",
+      items: [
+        {
+          title: "Help Center",
+          description: "Get all the answers you need right here",
+          icon: <Zap className="size-5 shrink-0" />,
+          url: "#",
+        },
+        {
+          title: "Contact Us",
+          description: "We are here to help you with any questions you have",
+          icon: <Sunset className="size-5 shrink-0" />,
+          url: "#",
+        },
+        {
+          title: "Status",
+          description: "Check the current status of our services and APIs",
+          icon: <Trees className="size-5 shrink-0" />,
+          url: "#",
+        },
+        {
+          title: "Terms of Service",
+          description: "Our terms and conditions for using our services",
+          icon: <Book className="size-5 shrink-0" />,
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Pricing",
+      url: "#",
+    },
+    {
+      title: "Blog",
+      url: "#",
+    },
+  ],
+  auth: {
+    login: { title: "Login", url: "#" },
+    signup: { title: "Sign up", url: "#" },
   },
-  {
-    title: "Contact",
-    href: "/contact",
-  },
-];
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Mens",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Womens",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Kids",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Electronics",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Accessories",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Others",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
-
+}
 export function MainMenu() {
   return (
     <NavigationMenu viewport={false}>
       <NavigationMenuList>
-        {pages.map((page: { title: string; href: string }, index: number) => (
+        {Navbar.menu.map((page, index) => (
+          page.items ? <NavigationMenuItem key={index}>
+          <NavigationMenuTrigger>{page.title}</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="w-[200px]">
+              {page.items.map((subItem) => (
+                <ListItem
+                  key={subItem.title}
+                  title={subItem.title}
+                  href={subItem.url}
+                >
+                  {subItem.description}
+                </ListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>:
           <NavigationMenuItem key={index}>
             <NavigationMenuLink
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <Link href={page.href}>{page.title}</Link>
+              <Link href={page.url}>{page.title}</Link>
             </NavigationMenuLink>
           </NavigationMenuItem>
         ))}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="w-[200px]">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
