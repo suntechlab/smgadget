@@ -33,7 +33,7 @@ const Navbar = {
     title: "Smgadgetbd",
   },
   menu: [
-    { title: "Home", url: "#" },
+    { title: "Shop", url: "/shop" },
     {
       title: "Products",
       url: "#",

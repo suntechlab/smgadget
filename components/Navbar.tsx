@@ -136,10 +136,10 @@ const Navbar = ({
       url: "#",
     },
   ],
-  auth = {
-    login: { title: "Login", url: "#" },
-    signup: { title: "Sign up", url: "#" },
-  },
+  // auth = {
+  //   login: { title: "Login", url: "#" },
+  //   signup: { title: "Sign up", url: "#" },
+  // },
 }: NavbarProps) => {
   return (
     <header className="bg-background sticky top-0 z-40 w-full py-2 md:py-4 border-b">

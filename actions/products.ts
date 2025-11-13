@@ -7,7 +7,7 @@ export async function getProducts(): Promise<Products> {
   return data;
 }
 export async function getProductDetails(): Promise<Product> {
-  const response = await fetch('https://dummyjson.com/products/1');
+  const response = await fetch('https://dummyjson.com/products/6');
   const data: Product = await response.json();
   return data;
 }
