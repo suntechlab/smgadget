@@ -9,33 +9,45 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
 import { Product } from "@/types";
 import { Star, Share2, Minus, Plus, ShoppingBagIcon } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 export function ProductDetails({ product }: { product: Product }) {
   const [api, setApi] = React.useState<CarouselApi>();
+  const [api1, setApi1] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
 
   React.useEffect(() => {
-    if (!api) {
+    if (!api || !api1) {
       return;
     }
-    setCurrent(api.selectedScrollSnap() + 1);
+    setCurrent(api.selectedScrollSnap());
 
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
+    const handleTopSelect = () => {
+      const selected = api.selectedScrollSnap();
+      setCurrent(selected);
+      api1.scrollTo(selected);
+    };
+    const handleBottomSelect = () => {
+      const selected = api1.selectedScrollSnap();
+      setCurrent(selected);
+      api.scrollTo(selected);
+    };
+    api.on("select", handleTopSelect);
+    api1.on("select", handleBottomSelect);
+    return () => {
+      api.off("select", handleTopSelect);
+      api1.off("select", handleBottomSelect);
+    };
+  }, [api, api1]);
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 px-4 py-8">
-      <div className="flex items-start justify-between">
+    <div className="mx-auto max-w-screen-2xl px-4 xl:px-8 py-6">
+      <div className="flex items-start justify-between mb-5">
         <div className="grid gap-2">
           <div className="text-sm text-gray-500">Jacket</div>
           <h1 className="text-3xl font-bold">{product.title}</h1>
@@ -55,7 +67,6 @@ export function ProductDetails({ product }: { product: Product }) {
           <span className="sr-only">Share</span>
         </Button>
       </div>
-      <Separator />
       <div className="grid items-start gap-8 md:grid-cols-2 lg:gap-12">
         <div className="space-y-4">
           <Carousel setApi={setApi} opts={{ loop: true }}>
@@ -75,26 +86,27 @@ export function ProductDetails({ product }: { product: Product }) {
             <CarouselPrevious className="top-[calc(50%+0.5rem)] left-2" />
             <CarouselNext className="top-[calc(50%+0.5rem)] right-2" />
           </Carousel>
-          <div className="grid grid-cols-4 gap-4">
-            {product.images.map((image, index) => (
-              <button
-                key={index}
-                onClick={() => api?.scrollTo(index)}
-                className={cn("overflow-hidden rounded-lg", {
-                  "border border-primary": current === index + 1,
-                })}
-              >
-                <Image
-                  src={image}
-                  alt="Product thumbnail 1"
-                  className="aspect-4/3 object-cover"
-                  width={500}
-                  height={500}
-                />
-                <span className="sr-only">View Image</span>
-              </button>
-            ))}
-          </div>
+          <Carousel setApi={setApi1} opts={{ loop: true }}>
+            <CarouselContent>
+              {product.images.map((image, index) => (
+                <CarouselItem
+                  key={index}
+                  onClick={() => api?.scrollTo(index)}
+                  className="basis-1/3 sm:basis-1/5"
+                >
+                  <Image
+                    src={image}
+                    alt="Product thumbnail 1"
+                    className={`aspect-4/3 object-cover border rounded-lg ${
+                      index === current && "border-primary"
+                    }`}
+                    width={500}
+                    height={500}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
 
         {/* Product Details Section */}

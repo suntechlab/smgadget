@@ -60,7 +60,7 @@ export default async function Shop(props: {
 
   if (!products) return null;
   return (
-    <div className="py-12">
+    <div className="py-5 md:py-12">
       <div className="mx-auto max-w-screen-2xl flex flex-col gap-5 sm:flex-row px-4 xl:px-8">
         <aside className="hidden sm:block w-64 space-y-5">
           <div className="flex items-center justify-between">
