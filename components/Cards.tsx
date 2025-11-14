@@ -23,6 +23,7 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Product } from "@/types";
+import Link from "next/link";
 
 function ProductCard({ product }: { product: Product }) {
   const [liked, setLiked] = useState<boolean>(false);
@@ -32,13 +33,15 @@ function ProductCard({ product }: { product: Product }) {
       key={product.id}
       className="relative flex flex-col justify-between pt-0 shadow-none"
     >
-      <Image
-        src={product.thumbnail}
-        alt={product.title}
-        width={300}
-        height={300}
-        className="size-3/4 mx-auto object-contain rounded-tl-lg rounded-tr-lg"
-      />
+      <Link href={"/product"}>
+        <Image
+          src={product.thumbnail}
+          alt={product.title}
+          width={300}
+          height={300}
+          className="size-3/4 mx-auto object-contain rounded-tl-lg rounded-tr-lg"
+        />
+      </Link>
       <Button
         size={"icon"}
         onClick={() => setLiked(!liked)}

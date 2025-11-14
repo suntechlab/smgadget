@@ -7,36 +7,48 @@ import { UserDropdown } from "@/components/UserDropdown";
 import { ButtonCart, ButtonSearch } from "@/components/Buttons";
 import { SearchModal } from "@/components/SearchModal";
 import { CartModal } from "@/components/CartModal";
-import { FaShoppingCart } from "react-icons/fa";
+import Image from "next/image";
 export function Header() {
   return (
     <header className="bg-background sticky top-0 z-40 w-full py-2 md:py-4 border-b">
       <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
         <div className="hidden items-center justify-between gap-2 md:flex">
-          <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>
-            <FaShoppingCart className="text-rose-500" size={24}/>SM
+          <Link href={"/"}>
+            <Image
+              src={"/logo.png"}
+              className="w-20 object-cover"
+              alt={"smgadgetbd"}
+              width={626}
+              height={222}
+            />
           </Link>
           <MainMenu />
           <div className="flex gap-3">
-            <ButtonSearch/>            
-            <ModeToggle />            
-              <ButtonCart/>
-              <UserDropdown/>                    
+            <ButtonSearch />
+            <ModeToggle />
+            <UserDropdown />
+            <ButtonCart />
           </div>
         </div>
         <div className="flex items-center justify-between md:hidden">
-          <Link className="flex items-center font-black text-xl after:content-['GADGET'] after:text-rose-500" href={"/"}>
-            <FaShoppingCart className="text-rose-500" size={24}/>SM
+          <Link href={"/"}>
+            <Image
+              src={"/logo.png"}
+              className="w-20 object-cover"
+              alt={"smgadgetbd"}
+              width={626}
+              height={222}
+            />
           </Link>
           <div className="flex gap-0.5 min-[340px]:gap-1">
-            <ButtonSearch/>            
-            <ButtonCart/>
-            <UserDropdown/>         
-            <MobileMenu />         
+            <ButtonSearch />
+            <UserDropdown />
+            <ButtonCart />
+            <MobileMenu />
           </div>
         </div>
-        <SearchModal/>
-        <CartModal/>  
+        <SearchModal />
+        <CartModal />
       </div>
     </header>
   );

@@ -1,7 +1,7 @@
 import { getProducts } from "@/actions/products";
 import { ProductCard } from "@/components/Cards";
 import {
-  Filter,
+  ResetFilter,
   FilterByBrand,
   FilterByCategory,
   FilterByColor,
@@ -10,6 +10,19 @@ import {
   SelectRowsPerPage,
   SortByPrice,
 } from "@/components/ProductPagination";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Filter } from "lucide-react";
 export default async function Shop(props: {
   searchParams?: Promise<{
     query?: string;
@@ -47,28 +60,64 @@ export default async function Shop(props: {
 
   if (!products) return null;
   return (
-    <div className="py-12">
-      <div className="mx-auto max-w-screen-2xl flex flex-col gap-5 md:flex-row px-4 xl:px-8">
-        <aside className="w-64 space-y-5">
-          <Filter/>
+    <div className="py-5 md:py-12">
+      <div className="mx-auto max-w-screen-2xl flex flex-col gap-5 sm:flex-row px-4 xl:px-8">
+        <aside className="hidden sm:block w-64 space-y-5">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold">Filters</h3>
+            <ResetFilter />
+          </div>
           <FilterByCategory />
           <FilterByBrand />
-                    <FilterByPrice range={[min, max]} />
+          <FilterByPrice range={[min, max]} />
           <FilterByColor />
         </aside>
         <main className="flex-1">
-          <div className="flex justify-between mb-5">
+          <div className="mb-5 sm:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant={"outline"}>
+                  <Filter />
+                  Filters
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="gap-0">
+                <SheetHeader>
+                  <div className="flex items-center justify-between">
+                    <SheetTitle>Filters</SheetTitle>
+                    <ResetFilter />
+                  </div>
+                  <VisuallyHidden asChild>
+                    <SheetDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove your data from our servers.
+                    </SheetDescription>
+                  </VisuallyHidden>
+                </SheetHeader>
+                <Separator />
+                <ScrollArea className="h-[calc(100%-68px)]">
+                  <div className="p-4 space-y-4">
+                    <FilterByCategory />
+                    <FilterByBrand />
+                    <FilterByPrice range={[min, max]} />
+                    <FilterByColor />
+                  </div>
+                </ScrollArea>
+              </SheetContent>
+            </Sheet>
+          </div>
+          <div className="flex justify-between gap-3 mb-5">
             <SelectRowsPerPage pageSize={pageSize} />
             <SortByPrice />
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid min-[500]:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {paginate.map((item) => (
               <ProductCard key={item.id} product={item} />
             ))}
           </div>
-          <div className="mt-12">
+          {pageCount > 1 && <div className="mt-12">
             <ProductPagination pageCount={pageCount} />
-          </div>
+          </div>}
         </main>
       </div>
     </div>

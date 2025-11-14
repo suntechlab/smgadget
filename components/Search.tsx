@@ -13,7 +13,7 @@ export function Search() {
   const searchParams = useSearchParams();
 
   return (
-    <Form action="/products" autoComplete="off">
+    <Form action="/shop" autoComplete="off">
       <InputGroup className="h-9 sm:h-11">
         <InputGroupInput
           name="query"
