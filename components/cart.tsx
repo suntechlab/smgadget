@@ -1,132 +1,147 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
-
+import { useCartStore } from "@/lib/store";
+import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-import { CartItem } from "./cart-item";
-import { CouponSection } from "./coupon-section";
-import { OrderSummary } from "./order-summary";
-import { PaymentMethods } from "./payment-methods";
+import Image from "next/image";
+import { Input } from "./ui/input";
+import { Separator } from "./ui/separator";
+import Link from "next/link";
 
-const cartData = [
-  {
-    id: "1",
-    name: "Samsung Galaxy S23 Ultra S918B/DS 256GB",
-    color: "Phantom Black",
-    price: 1049.99,
-    quantity: 2,
-    image: "https://bundui-images.netlify.app/products/01.jpeg"
-  },
-  {
-    id: "2",
-    name: "JBL Charge 3 Waterproof Portable Bluetooth Speaker",
-    color: "Black",
-    price: 109.99,
-    quantity: 1,
-    image: "https://bundui-images.netlify.app/products/02.jpeg"
-  },
-  {
-    id: "3",
-    name: "GARMIN Fenix 7X 010-02541-11 Exclusive Version",
-    color: "Black",
-    price: 349.99,
-    quantity: 1,
-    image: "https://bundui-images.netlify.app/products/03.jpeg"
-  },
-  {
-    id: "4",
-    name: "Beats Fit Pro - True Wireless Noise Cancelling Earbuds",
-    color: "Phantom Black",
-    price: 199.99,
-    quantity: 1,
-    image: "https://bundui-images.netlify.app/products/04.jpeg"
-  },
-  {
-    id: "5",
-    name: "JLab Epic Air Sport ANC True Wireless Earbuds",
-    color: "Black",
-    price: 99.99,
-    quantity: 1,
-    image: "https://bundui-images.netlify.app/products/06.jpeg"
-  }
-];
-
-export type CartItemType = (typeof cartData)[number];
-
-export default function Cart() {
-  const [cartItems, setCartItems] = useState<CartItemType[]>(cartData);
-
-  const updateQuantity = (id: string, quantity: number) => {
-    setCartItems((items) => items.map((item) => (item.id === id ? { ...item, quantity } : item)));
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
-  };
-
-  const handleApplyCoupon = (code: string) => {
-    console.log("Applying coupon:", code);
-    // Implement coupon logic here
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const discount = 0;
-  const delivery = 29.99;
-  const tax = 39.99;
-
+function CartList({ className, ...props }: React.ComponentProps<"div">) {
+  const cart = useCartStore((state) => state.cart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const incrementQuantity = useCartStore((state) => state.incrementQuantity);
+  const decrementQuantity = useCartStore((state) => state.decrementQuantity);
   return (
-    <div className="bg-background min-h-screen p-4 lg:p-8">
-      <div className="mx-auto max-w-7xl">
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {/* Shopping Cart Section */}
-          <div className="lg:col-span-2">
-            <div className="bg-card border-cart-border rounded-lg border p-6">
-              <h1 className="mb-6 text-2xl font-semibold">Shopping Cart</h1>
-
-              {/* Table Header - Hidden on mobile */}
-              <div className="border-cart-border text-muted-foreground mb-4 hidden gap-4 border-b pb-4 text-sm font-medium lg:grid lg:grid-cols-[2fr,1fr,1fr,auto]">
-                <div>Product</div>
-                <div className="text-center">Quantity</div>
-                <div className="text-center">Price</div>
-                <div className="w-8"></div>
+    <div className={className} {...props}>
+      <div className="flex justify-between mb-5">
+        <h2 className="font-bold text-xl">Shopping Cart</h2>
+        <h3 className="font-bold text-xl text-muted-foreground">
+          {cart.length} Items
+        </h3>
+      </div>
+      <div className="space-y-3">
+        {cart.map((product, index) => (
+          <div
+            key={index}
+            className="flex flex-col min-[400]:flex-row sm:items-center gap-2"
+          >
+            <div className="w-full min-[400]:max-w-[110px]">
+              <Image
+                src={product.thumbnail}
+                alt={product.title}
+                className="border rounded-lg max-[400]:aspect-4/3"
+                width={500}
+                height={500}
+              />
+            </div>
+            <div className="grid grid-cols-4 gap-2 w-full">
+              <div className="col-span-full sm:col-span-2">
+                <div className="flex flex-col gap-2">
+                  <h4 className="font-bold">{product.title}</h4>
+                  <div className="flex sm:flex-col gap-2">
+                    <h5>White</h5>
+                    <h5>2XL</h5>
+                  </div>
+                </div>
               </div>
-
-              {/* Cart Items */}
-              <div className="space-y-4">
-                {cartItems.map((item) => (
-                  <CartItem
-                    key={item.id}
-                    {...item}
-                    onUpdateQuantity={updateQuantity}
-                    onRemove={removeItem}
+              <div className="col-span-full sm:col-span-2 flex items-center justify-between">
+                <div className="flex items-center border rounded-lg order-2">
+                  <Button
+                    variant={"ghost"}
+                    onClick={() => decrementQuantity(product)}
+                  >
+                    <MinusIcon />
+                  </Button>
+                  <Input
+                    type="button"
+                    value={product.quantity}
+                    className="w-10 border-t-0 border-b-0 rounded-none shadow-none"
                   />
-                ))}
+                  <Button
+                    variant={"ghost"}
+                    onClick={() => incrementQuantity(product)}
+                  >
+                    <PlusIcon />
+                  </Button>
+                </div>
+                <div className="order-1">{product.price}</div>
+                <div className="order-3">
+                  <Button
+                    variant={"outline"}
+                    size={"icon"}
+                    onClick={() => removeFromCart(product)}
+                  >
+                    <TrashIcon />
+                  </Button>
+                </div>
               </div>
             </div>
-
-            {/* Action Buttons */}
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-              <Button variant="outline" className="flex items-center gap-2">
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </Button>
-              <Button variant="destructive" className="bg-destructive hover:bg-destructive/90">
-                Cancel Order
-              </Button>
-            </div>
           </div>
-
-          {/* Right Sidebar */}
-          <div className="space-y-6">
-            <CouponSection onApplyCoupon={handleApplyCoupon} />
-            <OrderSummary subtotal={subtotal} discount={discount} delivery={delivery} tax={tax} />
-            <PaymentMethods />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
 }
+function CartSummary({ className, ...props }: React.ComponentProps<"div">) {
+  const cart = useCartStore((state) => state.cart);
+  const subTotal = cart.reduce(
+    (acc, product) => acc + product.price * (product.quantity as number),
+    0
+  );
+  let shippingCharge = 0;
+  if (subTotal > 0) {
+    shippingCharge = 100;
+  }
+  const total = (subTotal + shippingCharge).toFixed(2);
+  return (
+    <div className={className} {...props}>
+      <div className="flex justify-between mb-5">
+        <h2 className="font-bold text-xl">Order Summary</h2>
+      </div>
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <p className="text-lg">{cart.length} Items</p>
+          <p className="text-lg font-bold">Tk{subTotal.toFixed(2)}</p>
+        </div>
+        <div className="flex items-center justify-between">
+          <p className="text-lg">Shipping</p>
+          <p className="text-lg">Tk{shippingCharge.toFixed(2)}</p>
+        </div>
+        <Separator />
+        <div className="flex items-center justify-between font-bold">
+          <p className="text-lg">Total</p>
+          <p className="text-lg">Tk{total}</p>
+        </div>
+        <Button asChild className="w-full" size={"lg"}>
+          <Link href={"/checkout"}>Checkout</Link>
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function CartContainder() {
+  const cart = useCartStore((state) => state.cart);
+  return (
+    <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
+      {cart.length > 0 ? (
+        <div className="grid md:grid-cols-3 gap-5">
+          <CartList className="col-span-full lg:col-span-2 p-6 rounded-lg border" />
+          <div>
+            <CartSummary className="p-6 rounded-lg border" />
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center min-h-[calc(100vh-500px)]">
+          <h2 className="text-3xl font-bold text-muted-foreground">
+            Cart is Empty
+          </h2>
+        </div>
+      )}
+    </div>
+  );
+}
+export { CartContainder };

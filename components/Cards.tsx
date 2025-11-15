@@ -131,5 +131,59 @@ function CartCard({ product }: { product: Product }) {
     </Card>
   );
 }
+function CartList({ product }: { product: Product }) {
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const incrementQuantity = useCartStore((state) => state.incrementQuantity);
+  const decrementQuantity = useCartStore((state) => state.decrementQuantity);
+  return (
+    <Card
+      key={product.id}
+      className="p-0 border-none shadow-none min-[360]:flex-row gap-4"
+    >
+      <Image
+        src={product.thumbnail}
+        alt={product.title}
+        width={120}
+        height={120}
+        className="border size-full min-[360]:size-[5.5rem] rounded aspect-video"
+      />
+      <div className="flex flex-col gap-4 h-auto min-[360]:gap-0 min-[360]:w-full">
+        <CardHeader className="p-0">
+          <CardTitle className="line-clamp-1">{product.title}</CardTitle>
+          <CardDescription>{product.category}</CardDescription>
+          <CardAction>
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              onClick={() => removeFromCart(product)}
+            >
+              <Trash2Icon />
+            </Button>
+          </CardAction>
+        </CardHeader>
+        <CardFooter className="p-0 mt-auto">
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            onClick={() => decrementQuantity(product)}
+            className="shadow-none rounded size-8"
+          >
+            <MinusIcon />
+          </Button>
+          <span className="w-6 text-center text-sm">{product.quantity}</span>
+          <Button
+            variant={"outline"}
+            size={"icon"}
+            onClick={() => incrementQuantity(product)}
+            className="shadow-none rounded size-8"
+          >
+            <PlusIcon />
+          </Button>
+          <span className="ml-auto text-sm">{product.price}</span>
+        </CardFooter>
+      </div>
+    </Card>
+  );
+}
 
-export { ProductCard, CartCard };
+export { ProductCard, CartCard, CartList };
