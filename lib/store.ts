@@ -22,6 +22,8 @@ interface Actions {
   removeFromCart: (Item: Product) => void;
   toggleCart: () => void;
   toggleSearch: () => void;
+  openCart: () => void;
+  closeCart: () => void;
 }
 
 const INITIAL_STATE: CartState = {
@@ -80,7 +82,7 @@ export const useCartStore = create<CartState & Actions>((set, get) => ({
   decrementQuantity: (product: Product) => {
     set({
       cart: get().cart.map((item) =>
-        item.id === product.id && item.quantity as number > 1
+        item.id === product.id && (item.quantity as number) > 1
           ? { ...item, quantity: (item.quantity as number) - 1 }
           : item
       ),
@@ -97,4 +99,6 @@ export const useCartStore = create<CartState & Actions>((set, get) => ({
   toggleCart: () => set({ isOpenCart: !get().isOpenCart }),
   isOpenSearch: INITIAL_STATE.isOpenSearch,
   toggleSearch: () => set({ isOpenSearch: !get().isOpenSearch }),
+  openCart: () => set({ isOpenCart: true }),
+  closeCart: () => set({ isOpenCart: false }),
 }));

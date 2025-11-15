@@ -1,5 +1,7 @@
 "use client";
+import * as React from "react";
 import { useCartStore } from "@/lib/store";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -15,11 +17,26 @@ import Link from "next/link";
 export function CartModal() {
   const isOpenCart = useCartStore((state) => state.isOpenCart);
   const toggleCart = useCartStore((state) => state.toggleCart);
+  const closeCart = useCartStore((state) => state.closeCart);
   const cart = useCartStore((state) => state.cart);
   const total = cart.reduce(
     (acc, product) => acc + product.price * (product.quantity as number),
     0
   );
+  const pathname = usePathname();
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1023) {
+        closeCart();
+      }
+    };
+    closeCart();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [pathname,closeCart]);
   return (
     <Sheet open={isOpenCart} onOpenChange={toggleCart}>
       <SheetContent side="right">
@@ -47,17 +64,8 @@ export function CartModal() {
               <Link href="#">Checkout</Link>
             </Button>
           </div>
-          <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-            <p>
-              or{" "}
-              <button
-                type="button"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Continue Shopping
-                <span aria-hidden="true"> &rarr;</span>
-              </button>
-            </p>
+          <div className="mt-6 flex justify-center text-center text-sm">
+            <Link href={"/cart"}>View Cart</Link>
           </div>
         </SheetFooter>
       </SheetContent>
