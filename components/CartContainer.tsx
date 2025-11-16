@@ -144,4 +144,4 @@ function CartContainder() {
     </div>
   );
 }
-export { CartList, CartSummary, CartContainder };
+export { CartContainder };
