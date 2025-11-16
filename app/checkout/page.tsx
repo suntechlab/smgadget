@@ -1,5 +1,8 @@
-import {Checkout} from "@/components/checkout";
-
-export default function Page() {
-  return <Checkout />;
+import { CartContainder } from "@/components/CartContainer";
+export default function Cart() {
+  return (
+    <section className="py-12">
+      <CartContainder/>
+    </section>
+  );
 }
