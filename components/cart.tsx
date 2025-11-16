@@ -9,13 +9,13 @@ import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
 
-function CartList() {
+function CartList({ className, ...props }: React.ComponentProps<"div">) {
   const cart = useCartStore((state) => state.cart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const incrementQuantity = useCartStore((state) => state.incrementQuantity);
   const decrementQuantity = useCartStore((state) => state.decrementQuantity);
   return (
-    <div>
+    <div className={className} {...props}>
       <div className="flex justify-between mb-5">
         <h2 className="font-bold text-xl">Shopping Cart</h2>
         <h3 className="font-bold text-xl text-muted-foreground">
@@ -85,7 +85,7 @@ function CartList() {
     </div>
   );
 }
-function CartSummary() {
+function CartSummary({ className, ...props }: React.ComponentProps<"div">) {
   const cart = useCartStore((state) => state.cart);
   const subTotal = cart.reduce(
     (acc, product) => acc + product.price * (product.quantity as number),
@@ -97,7 +97,7 @@ function CartSummary() {
   }
   const total = (subTotal + shippingCharge).toFixed(2);
   return (
-    <div>
+    <div className={className} {...props}>
       <div className="flex justify-between mb-5">
         <h2 className="font-bold text-xl">Order Summary</h2>
       </div>
@@ -129,9 +129,9 @@ function CartContainder() {
     <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
       {cart.length > 0 ? (
         <div className="grid md:grid-cols-3 gap-5">
-          <CartList />
+          <CartList className="col-span-full lg:col-span-2 p-6 rounded-lg border" />
           <div>
-            <CartSummary />
+            <CartSummary className="p-6 rounded-lg border" />
           </div>
         </div>
       ) : (
@@ -144,4 +144,4 @@ function CartContainder() {
     </div>
   );
 }
-export { CartContainder };
+export { CartList, CartSummary, CartContainder };

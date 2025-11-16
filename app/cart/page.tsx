@@ -1,8 +1,9 @@
-import { CartContainder } from "@/components/Cart";
+import { CartContainder, CartList, CartSummary } from "@/components/Cart";
 export default function Cart() {
   return (
     <section className="py-12">
-      <CartContainder/>
+      <CartList/>
+      <CartSummary/>
     </section>
   );
 }
