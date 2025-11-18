@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Menu, XIcon } from "lucide-react";
+import { LogInIcon, LogOutIcon, Menu, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -19,12 +19,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ModeSwitch } from "./ModeSwitch";
 import Image from "next/image";
 import { Book, Sunset, Trees, Zap } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 const Navbar = {
   logo: {
     url: "/",
@@ -110,6 +112,7 @@ const Navbar = {
   },
 };
 export function MobileMenu() {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
 
@@ -127,7 +130,7 @@ export function MobileMenu() {
   }, [pathname]);
   return (
     <Drawer
-      direction="top"
+      direction="left"
       open={isOpen}
       onOpenChange={setIsOpen}
       autoFocus={true}
@@ -139,30 +142,55 @@ export function MobileMenu() {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="border-b py-2">
-          <div className="flex justify-between">
-            <Link href={"/"}>
-              <Image
-                src={"/logo.png"}
-                className="w-20 object-cover"
-                alt={"smgadgetbd"}
-                width={626}
-                height={222}
-              />
-            </Link>
-            <DrawerClose asChild className="cursor-pointer">
-              <Button variant="ghost" size={"icon"}>
-                <XIcon className="size-5" />
-              </Button>
-            </DrawerClose>
-          </div>
-          <VisuallyHidden asChild>
-            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          </VisuallyHidden>
-          <VisuallyHidden asChild>
-            <DrawerDescription>Are you absolutely sure?</DrawerDescription>
-          </VisuallyHidden>
-        </DrawerHeader>
+        {!session?.user ? (
+          <DrawerHeader className="border-b py-2">
+            <div className="flex items-center justify-between">
+              <Link href={"/"}>
+                <Image
+                  src={"/logo.png"}
+                  className="w-20 object-cover"
+                  alt={"smgadgetbd"}
+                  width={626}
+                  height={222}
+                />
+              </Link>
+              <DrawerClose asChild className="cursor-pointer">
+                <Button variant="ghost" size={"icon"}>
+                  <XIcon className="size-5" />
+                </Button>
+              </DrawerClose>
+            </div>
+            <VisuallyHidden asChild>
+              <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+            </VisuallyHidden>
+            <VisuallyHidden asChild>
+              <DrawerDescription>Are you absolutely sure?</DrawerDescription>
+            </VisuallyHidden>
+          </DrawerHeader>
+        ) : (
+          <DrawerHeader className="py-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Avatar>
+                  <AvatarImage
+                    src={session.user.image as string}
+                    alt={session.user.name as string}
+                  />
+                  <AvatarFallback>{"SM"}</AvatarFallback>
+                </Avatar>
+                <DrawerTitle>{session.user.name}</DrawerTitle>
+              </div>
+              <DrawerClose asChild className="cursor-pointer">
+                <Button variant="ghost" size={"icon"}>
+                  <XIcon className="size-4" />
+                </Button>
+              </DrawerClose>
+            </div>
+            <VisuallyHidden asChild>
+              <DrawerDescription>Are you absolutely sure?</DrawerDescription>
+            </VisuallyHidden>
+          </DrawerHeader>
+        )}
         <div className="flex flex-col gap-4 p-4">
           <Accordion type="single" collapsible className="flex flex-col gap-4">
             {Navbar.menu.map((page, index) =>
@@ -211,8 +239,21 @@ export function MobileMenu() {
             )}
           </Accordion>
         </div>
-        <DrawerFooter>
+        <DrawerFooter className="gap-4">
           <ModeSwitch />
+          {!session?.user ? (
+            <Button asChild variant={"outline"}>
+              <Link href={"/signin"} className="flex items-center gap-2">
+                <LogInIcon size={16} />
+                Sign In
+              </Link>
+            </Button>
+          ) : (
+            <Button variant={"outline"} onClick={() => signOut()}>
+              <LogOutIcon size={16} />
+              Sign Out
+            </Button>
+          )}
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

@@ -48,16 +48,6 @@ export function HeroSection() {
               <CarouselContent>
                 {slider.map((item, index) => (
                   <CarouselItem key={index}>
-                    {/* <div className="absolute size-full p-4 md:p-8">
-                  <div className="max-w-2xl space-y-4">
-                    <h1 className="text-[clamp(1.75rem,5vw,4rem)] font-black tracking-tight leading-tight">
-                      {item.title}
-                    </h1>
-                    <p className="text-[clamp(1rem,2vw,1.125rem)]">
-                      {item.description}
-                    </p>
-                  </div>
-                </div> */}
                     <Image
                       className="rounded-lg"
                       src={item.image}
@@ -71,18 +61,18 @@ export function HeroSection() {
               <CarouselDots />
             </Carousel>
           </div>
-          <div className="col-span-full sm:col-span-5 lg:col-span-3">
+          <div className="col-span-5 lg:col-span-3">
             <Image
-              className="rounded-lg h-full object-cover"
+              className="rounded-lg h-full min-h-28 object-cover"
               src={slider[0].image}
               alt={slider[0].title}
               width={1920}
               height={960}
             />
           </div>
-          <div className="col-span-full sm:col-span-5 lg:col-span-3">
+          <div className="col-span-5 lg:col-span-3">
             <Image
-              className="rounded-lg h-full object-cover"
+              className="rounded-lg h-full min-h-28 object-cover"
               src={slider[1].image}
               alt={slider[1].title}
               width={1920}

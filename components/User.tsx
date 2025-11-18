@@ -1,4 +1,6 @@
-import { Button } from "@/components/ui/button"
+import type { Session } from "next-auth";
+import { logOut } from "@/actions/users";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +14,20 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { User2Icon } from "lucide-react"
-
-export function UserDropdown() {
+} from "@/components/ui/dropdown-menu";
+interface AvatarProps {
+  src: string;
+  alt: string;
+  fallback: string;
+}
+export function AvatarUser(avatar: AvatarProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size={"icon"}><User2Icon className="size-5"/></Button>
+        <Avatar>
+          <AvatarImage src={avatar.src} alt={avatar.alt} />
+          <AvatarFallback>{avatar.fallback}</AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -65,11 +73,23 @@ export function UserDropdown() {
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuItem disabled>API</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={logOut}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
+}
+
+export function UserAvatarMobile({ session }: { session: Session | null }) {
+  return (
+    <Avatar>
+      <AvatarImage
+        src={session?.user?.image as string}
+        alt={session?.user?.name as string}
+      />
+      <AvatarFallback>{"SM"}</AvatarFallback>
+    </Avatar>
+  );
 }

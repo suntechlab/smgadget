@@ -61,11 +61,8 @@ export function CartModal() {
           </p>
           <div className="mt-6">
             <Button asChild className="w-full" size={"lg"}>
-              <Link href="#">Checkout</Link>
+              <Link href="/checkout">Checkout</Link>
             </Button>
-          </div>
-          <div className="mt-6 flex justify-center text-center text-sm">
-            <Link href={"/cart"}>View Cart</Link>
           </div>
         </SheetFooter>
       </SheetContent>
