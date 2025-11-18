@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { signIn, signOut } from "@/auth"
+import { login } from "@/actions/users"
 import {
   Field,
   FieldDescription,
@@ -11,10 +11,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-const login = async () => {
-        "use server"
-        await signIn("google")
-      }
+
 export function LoginForm({
   className,
   ...props

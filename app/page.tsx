@@ -1,7 +1,6 @@
 import { getProducts } from "@/actions/products";
 import { ProductCard } from "@/components/Cards";
 import { HeroSection } from "@/components/HeroSection";
-import { Button } from "@/components/ui/button";
 import {
   ArrowRightIcon,
   MessageCircleHeartIcon,

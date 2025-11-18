@@ -1,4 +1,5 @@
-import { signOut } from "@/auth";
+import type { Session } from "next-auth";
+import { logOut } from "@/actions/users";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -19,10 +20,6 @@ interface AvatarProps {
   alt: string;
   fallback: string;
 }
-const logOut = async () => {
-  "use server";
-  await signOut();
-};
 export function AvatarUser(avatar: AvatarProps) {
   return (
     <DropdownMenu>
@@ -82,5 +79,17 @@ export function AvatarUser(avatar: AvatarProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+export function UserAvatarMobile({ session }: { session: Session | null }) {
+  return (
+    <Avatar>
+      <AvatarImage
+        src={session?.user?.image as string}
+        alt={session?.user?.name as string}
+      />
+      <AvatarFallback>{"SM"}</AvatarFallback>
+    </Avatar>
   );
 }

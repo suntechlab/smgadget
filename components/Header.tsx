@@ -3,14 +3,13 @@ import { auth } from "@/auth"
 import { MainMenu } from "@/components/MainMenu";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ModeToggle } from "@/components/ModeToggle";
-import { UserDropdown } from "@/components/UserDropdown";
 import { ButtonCart, ButtonSearch } from "@/components/Buttons";
 import { SearchModal } from "@/components/SearchModal";
 import { CartModal } from "@/components/CartModal";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { User2Icon } from "lucide-react";
-import { AvatarUser } from "./Avatar";
+import { AvatarUser } from "./User";
 export async function Header() {
   const session = await auth()
   return (
@@ -30,7 +29,6 @@ export async function Header() {
           <div className="flex gap-3">
             <ButtonSearch />
             <ModeToggle />
-            {/* <UserDropdown /> */}
             <ButtonCart />
             <Button asChild variant={"ghost"}>
               {!session?.user ? <Link href={"/signin"}><User2Icon className="size-5"/></Link>:<AvatarUser src={session.user.image as string} alt={session.user.name as string} fallback={"SM"}/>}           
@@ -49,7 +47,6 @@ export async function Header() {
           </Link>
           <div className="flex gap-0.5 min-[340px]:gap-1">
             <ButtonSearch />
-            <UserDropdown />
             <ButtonCart />
             <MobileMenu />
           </div>

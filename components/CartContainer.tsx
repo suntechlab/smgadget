@@ -3,7 +3,6 @@ import * as React from "react";
 import { useCartStore } from "@/lib/store";
 import {
   CheckIcon,
-  ExternalLinkIcon,
   GiftIcon,
   MinusIcon,
   PlusIcon,
@@ -359,7 +358,6 @@ function PaymentMethods() {
   );
 }
 function CartContainder() {
-  const cart = useCartStore((state) => state.cart);
   return (
     <div className="mx-auto max-w-screen-2xl px-4 xl:px-8">
       <div className="grid md:grid-cols-3 gap-5">
