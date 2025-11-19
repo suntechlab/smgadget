@@ -3,6 +3,7 @@
 import * as React from "react";
 import { LogInIcon, LogOutIcon, Menu, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import type { Session } from "next-auth";
 import {
   Drawer,
   DrawerClose,
@@ -26,7 +27,6 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ModeSwitch } from "./ModeSwitch";
 import Image from "next/image";
 import { Book, Sunset, Trees, Zap } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
 const Navbar = {
   logo: {
     url: "/",
@@ -111,8 +111,7 @@ const Navbar = {
     signup: { title: "Sign up", url: "#" },
   },
 };
-export function MobileMenu() {
-  const { data: session } = useSession();
+export function MobileMenu({ session, onClick }: { session: Session | null, onClick:() => void }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
 
@@ -249,7 +248,7 @@ export function MobileMenu() {
               </Link>
             </Button>
           ) : (
-            <Button variant={"outline"} onClick={() => signOut()}>
+            <Button variant={"outline"} onClick={onClick}>
               <LogOutIcon size={16} />
               Sign Out
             </Button>
