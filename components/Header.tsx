@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { auth } from "@/auth"
+import { logOut } from "@/actions/users";
 import { MainMenu } from "@/components/MainMenu";
 import { MobileMenu } from "@/components/MobileMenu";
 import { ModeToggle } from "@/components/ModeToggle";
@@ -48,7 +49,7 @@ export async function Header() {
           <div className="flex gap-0.5 min-[340px]:gap-1">
             <ButtonSearch />
             <ButtonCart />
-            <MobileMenu />
+            <MobileMenu session={session} onClick={logOut} />
           </div>
         </div>
         <SearchModal />
