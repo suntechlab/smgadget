@@ -7,14 +7,15 @@ export default function NewPost() {
   async function createPost(formData: FormData) {
     "use server";
 
-    const title = formData.get("title") as string;
-    const content = formData.get("content") as string;
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
-    await prisma.post.create({
+    await prisma.user.create({
       data: {
-        title,
-        content,
-        authorId: 1,
+        name,
+        email,
+        password
       },
     });
 
@@ -27,26 +28,38 @@ export default function NewPost() {
       <h1 className="text-2xl font-bold mb-6">Create New Post</h1>
       <Form action={createPost} className="space-y-6">
         <div>
-          <label htmlFor="title" className="block text-lg mb-2">
-            Title
+          <label htmlFor="name" className="block text-lg mb-2">
+            Name
           </label>
           <input
             type="text"
-            id="title"
-            name="title"
-            placeholder="Enter your post title"
+            id="name"
+            name="name"
+            placeholder="Enter your name"
             className="w-full px-4 py-2 border rounded-lg"
           />
         </div>
         <div>
-          <label htmlFor="content" className="block text-lg mb-2">
-            Content
+          <label htmlFor="email" className="block text-lg mb-2">
+            Email
           </label>
-          <textarea
-            id="content"
-            name="content"
-            placeholder="Write your post content here..."
-            rows={6}
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            className="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+        <div>
+          <label htmlFor="password" className="block text-lg mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
             className="w-full px-4 py-2 border rounded-lg"
           />
         </div>
@@ -54,7 +67,7 @@ export default function NewPost() {
           type="submit"
           className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600"
         >
-          Create Post
+          Create User
         </button>
       </Form>
     </div>

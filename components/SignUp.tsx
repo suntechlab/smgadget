@@ -23,6 +23,7 @@ import {
 } from "./ui/field";
 import Link from "next/link";
 import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
+import { createUser } from "@/actions/users";
 const formSchema = z
   .object({
     name: z
@@ -94,7 +95,17 @@ export function SignupForm() {
             Enter your information below to create your account
           </p>
         </div>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(
+            async (data) =>
+              await createUser({
+                name: data.name,
+                email: data.email,
+                password: data.password,
+              })
+          )}
+          className="space-y-8"
+        >
           <FormField
             control={form.control}
             name="name"
