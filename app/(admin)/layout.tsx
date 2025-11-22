@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "My own business",
 };
 
-export default function AuthLayout({
+export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
