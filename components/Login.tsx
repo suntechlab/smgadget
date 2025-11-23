@@ -52,10 +52,6 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    signIn("credentials", values);
-  }
-
   return (
     <Form {...form}>
       <FieldGroup>

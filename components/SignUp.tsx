@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
