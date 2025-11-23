@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ import {
 import Link from "next/link";
 import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
 import { createUser } from "@/actions/users";
+import { toast } from "sonner";
 const formSchema = z
   .object({
     name: z
@@ -82,10 +84,6 @@ export function SignupForm() {
     },
   });
 
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   signIn("credentials", values);
-  // }
-
   return (
     <Form {...form}>
       <FieldGroup>
@@ -96,14 +94,20 @@ export function SignupForm() {
           </p>
         </div>
         <form
-          onSubmit={form.handleSubmit(
-            async (data) =>
-              await createUser({
-                name: data.name,
-                email: data.email,
-                password: data.password,
-              })
-          )}
+          onSubmit={form.handleSubmit(async (data) => {
+            const res = await createUser({
+              name: data.name,
+              email: data.email,
+              password: data.password,
+            });
+            if (res.success == false) {
+              form.setError("email", { type: "custom", message: res.message });
+            }
+            if (res.success == true) {
+              toast.success(res.message);
+              form.reset()
+            }
+          })}
           className="space-y-8"
         >
           <FormField

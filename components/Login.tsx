@@ -23,6 +23,8 @@ import {
 } from "./ui/field";
 import Link from "next/link";
 import { FaApple, FaGoogle, FaMeta } from "react-icons/fa6";
+import { loginUser } from "@/actions/users";
+import { toast } from "sonner";
 const formSchema = z.object({
   email: z.email({ message: "Enter valid email address" }),
   password: z
@@ -63,7 +65,27 @@ export function LoginForm() {
             Sign in to your account
           </p>
         </div>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(async (data) => {
+            const res = await loginUser(data);
+            if (res.success == false && res.emailError) {
+              form.setError("email", {
+                type: "custom",
+                message: res.emailError,
+              });
+            }
+            if (res.success == false && res.passwordError) {
+              form.setError("password", {
+                type: "custom",
+                message: res.passwordError,
+              });
+            }
+            if (res.success == true) {
+              toast.success(res.message);
+            }
+          })}
+          className="space-y-8"
+        >
           <FormField
             control={form.control}
             name="email"

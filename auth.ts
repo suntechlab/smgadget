@@ -4,7 +4,6 @@ import prisma from "@/lib/prisma";
 import authConfig from "@/auth.config";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
-import { comparePassword } from "./lib/password";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
@@ -24,11 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: credentials.email as string,
           },
         });
-        const isMatch = comparePassword(
-          credentials.password as string,
-          user?.password as string
-        );
-        if (!isMatch) {
+        if (!user) {
           throw new Error("Invalid credentials.");
         }
 
@@ -58,4 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
+  pages:{
+    signIn:"/signin"
+  }
 });
