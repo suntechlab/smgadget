@@ -21,6 +21,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { productFormSchema, type ProductFormData } from "@/lib/zod";
 import { PlusIcon, XIcon } from "lucide-react";
+import { createProduct } from "@/actions/products";
 
 export function AddProduct() {
   const [categories, setCategories] = useState<string[]>(["Headphones"]);
@@ -35,24 +36,24 @@ export function AddProduct() {
   } = useForm<ProductFormData>({
     resolver: zodResolver(productFormSchema),
     defaultValues: {
-      name: "",
-      description: "",
+      name: "T shirt",
+      description: "This is description",
       status: "published",
       categories: ["Headphones"],
-      tags: [],
+      tags: ['#t-shirt'],
       variations: [],
-      basePrice: "",
+      basePrice: "100",
       discountType: "none",
       template: "default",
       taxClass: "standard",
-      vatAmount: ""
+      vatAmount: "25"
     }
   });
 
-  const onSubmit = (data: ProductFormData) => {
-    console.log("Form submitted:", data);
-    // Handle form submission here
-  };
+  // const onSubmit = (data: ProductFormData) => {
+  //   console.log("Form submitted:", data);
+  //   // Handle form submission here
+  // };
 
   const addCategory = () => {
     if (newCategory && !categories.includes(newCategory)) {
@@ -92,7 +93,7 @@ export function AddProduct() {
 
   return (
     <div className="space-y-8 px-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={handleSubmit((data)=>createProduct(data))} className="space-y-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Left Column - Main Content */}
           <div className="space-y-4 lg:col-span-2">

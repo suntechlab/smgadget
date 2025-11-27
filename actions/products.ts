@@ -1,5 +1,19 @@
+"use server";
 import { Product, Products } from "@/types";
+import prisma from "@/lib/prisma";
+import { ProductFormData } from "@/lib/zod";
 
+export const createProduct = async (data: ProductFormData) => {
+  try {
+    await prisma.product.create({data:{name:data.name,description:data.description,basePrice:data.basePrice,tags:data.tags,discountType:data.discountType,taxClass:data.taxClass,status:data.status,template:data.template,vatAmount:data.vatAmount,variations:data.variations,categories:{create:[{name:data.categories[0]}]}}});
+    return {
+      success: true,
+      message: "Your product has been created successfully",
+    };
+  } catch (error) {
+    throw error;
+  }
+};
 
 export async function getProducts(): Promise<Products> {
   const response = await fetch('https://dummyjson.com/products');

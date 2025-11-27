@@ -44,6 +44,7 @@ model User {
   password      String?
   emailVerified DateTime? @map("email_verified")
   image         String?
+  role          Role     @default(USER)
   accounts      Account[]
   sessions      Session[]
 
@@ -57,4 +58,50 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Product {
+  id           Int        @id @default(autoincrement())
+  name         String
+  description  String?
+  status       Status     @default(published)
+  basePrice    String
+  discountType Discount   @default(none)
+  template     Template   @default(default)
+  taxClass     Tax        @default(standard)
+  vatAmount    String
+  categories   Category[]
+  tags         String[]
+  variations   Json[]
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  products Product[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+enum Status {
+  published
+  draft
+  archived
+}
+enum Discount {
+  none
+  percentage
+  fixed
+}
+enum Template {
+  default
+  minimal
+  detailed
+}
+enum Tax {
+  standard
+  reduced
+  zero
 }
