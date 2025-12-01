@@ -67,6 +67,7 @@ CREATE TABLE "Product" (
     "name" TEXT NOT NULL,
     "description" TEXT,
     "status" "Status" NOT NULL DEFAULT 'published',
+    "thumbnail" TEXT NOT NULL,
     "basePrice" TEXT NOT NULL,
     "discountType" "Discount" NOT NULL DEFAULT 'none',
     "template" "Template" NOT NULL DEFAULT 'default',

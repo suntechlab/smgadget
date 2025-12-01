@@ -1,5 +1,6 @@
 import { z } from "zod";
-
+const MAX_FILE_SIZE = 5000000; // 5MB
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 export const formSchema = z
   .object({
     name: z
@@ -51,7 +52,17 @@ export const productFormSchema = z.object({
   name: z.string().min(1, "Product name is required"),
   description: z.string().optional(),
   status: z.enum(["published", "draft", "archived"]),
-  categories: z.array(z.string()),
+  thumbnail: z.instanceof(File, { message: "Image is required." })
+    .refine((file) => file.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+      "Only .jpg, .jpeg, .png and .webp formats are supported."
+    ),
+  categories: z.array(
+    z.object({
+      name: z.string()
+    })
+  ),
   tags: z.array(z.string()),
   variations: z.array(
     z.object({
