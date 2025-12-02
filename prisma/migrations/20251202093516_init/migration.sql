@@ -73,6 +73,8 @@ CREATE TABLE "Product" (
     "template" "Template" NOT NULL DEFAULT 'default',
     "taxClass" "Tax" NOT NULL DEFAULT 'standard',
     "vatAmount" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
+    "barand" TEXT NOT NULL,
     "tags" TEXT[],
     "variations" JSONB[],
 
@@ -88,11 +90,11 @@ CREATE TABLE "Category" (
 );
 
 -- CreateTable
-CREATE TABLE "_CategoryToProduct" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL,
+CREATE TABLE "Brand" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
 
-    CONSTRAINT "_CategoryToProduct_AB_pkey" PRIMARY KEY ("A","B")
+    CONSTRAINT "Brand_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -108,7 +110,10 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "verification_tokens_identifier_token_key" ON "verification_tokens"("identifier", "token");
 
 -- CreateIndex
-CREATE INDEX "_CategoryToProduct_B_index" ON "_CategoryToProduct"("B");
+CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Brand_name_key" ON "Brand"("name");
 
 -- AddForeignKey
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -117,7 +122,7 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_CategoryToProduct" ADD CONSTRAINT "_CategoryToProduct_A_fkey" FOREIGN KEY ("A") REFERENCES "Category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_category_fkey" FOREIGN KEY ("category") REFERENCES "Category"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_CategoryToProduct" ADD CONSTRAINT "_CategoryToProduct_B_fkey" FOREIGN KEY ("B") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_barand_fkey" FOREIGN KEY ("barand") REFERENCES "Brand"("name") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -5,7 +5,7 @@ import { ProductFormData } from "@/lib/zod";
 
 export const createProduct = async (data: ProductFormData) => {
   try {
-    await prisma.product.create({data:{name:data.name,description:data.description,basePrice:data.basePrice,tags:data.tags,discountType:data.discountType,taxClass:data.taxClass,status:data.status,thumbnail:data.thumbnail.name,template:data.template,vatAmount:data.vatAmount,variations:data.variations,categories:{create:[{name:data.categories[0].name}]}}});
+    await prisma.product.create({data:{name:data.name,description:data.description,basePrice:data.basePrice,tags:data.tags,discountType:data.discountType,taxClass:data.taxClass,status:data.status,thumbnail:data.thumbnail.name,template:data.template,vatAmount:data.vatAmount,variations:data.variations,categories:{connectOrCreate:{where:data.categories[0],create:data.categories[0]}},brands:{connectOrCreate:{where:data.brands[0],create:data.brands[0]}}}});
     return {
       success: true,
       message: "Your product has been created successfully",

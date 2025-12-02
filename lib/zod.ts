@@ -62,7 +62,12 @@ export const productFormSchema = z.object({
     z.object({
       name: z.string()
     })
-  ),
+  ).min(1, "Category is required"),
+  brands: z.array(
+    z.object({
+      name: z.string()
+    })
+  ).min(1, "Brand is required"),
   tags: z.array(z.string()),
   variations: z.array(
     z.object({

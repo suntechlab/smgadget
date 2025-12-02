@@ -71,14 +71,23 @@ model Product {
   template     Template   @default(default)
   taxClass     Tax        @default(standard)
   vatAmount    String
-  categories   Category[]
+  category     String
+  categories   Category   @relation(fields: [category], references: [name])
+  barand       String  
+  brands       Brand      @relation(fields: [barand], references: [name])
   tags         String[]
   variations   Json[]
 }
 
 model Category {
   id    Int    @id @default(autoincrement())
-  name  String
+  name  String @unique
+  products Product[]
+}
+
+model Brand {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
   products Product[]
 }
 

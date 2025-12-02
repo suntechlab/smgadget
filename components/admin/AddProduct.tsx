@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -43,9 +42,26 @@ import { productFormSchema, type ProductFormData } from "@/lib/zod";
 import { PlusIcon, XIcon } from "lucide-react";
 import { createProduct } from "@/actions/products";
 
-export function AddProduct() {
+interface Category {
+  id: number;
+  name: string;
+}
+interface Brand {
+  id: number;
+  name: string;
+}
+export function AddProduct({
+  category,
+  brand,
+}: {
+  category: Category[];
+  brand: Brand[];
+}) {
   // const [categories, setCategories] = useState<string[]>(["Headphones"]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
   const [newCategory, setNewCategory] = useState("");
+  const [newBrand, setNewBrand] = useState("");
   // const [variations, setVariations] = useState<
   //   Array<{ type: string; value: string }>
   // >([]);
@@ -57,6 +73,7 @@ export function AddProduct() {
       description: "This is description",
       status: "published",
       categories: [],
+      brands: [],
       tags: ["#t-shirt"],
       variations: [],
       basePrice: "100",
@@ -75,6 +92,14 @@ export function AddProduct() {
     name: "categories",
   });
   const {
+    fields: brandField,
+    append: brandAppend,
+    remove: brandRemove,
+  } = useFieldArray({
+    control: form.control,
+    name: "brands",
+  });
+  const {
     fields: variationField,
     append: variationAppend,
     remove: variationRemove,
@@ -82,15 +107,18 @@ export function AddProduct() {
     control: form.control,
     name: "variations",
   });
-  const onSubmit = (data: ProductFormData) => {
-    console.log("Form submitted:", data);
-    // Handle form submission here
-  };
+  // const onSubmit = (data: ProductFormData) => {
+  //   console.log("Form submitted:", data);
+  //   // Handle form submission here
+  // };
 
   return (
     <Form {...form}>
-      <div className="space-y-8 px-4">
-        <form onSubmit={form.handleSubmit((data)=> createProduct(data))} className="space-y-8">
+      <div className="space-y-8 p-4 pt-0">
+        <form
+          onSubmit={form.handleSubmit((data) => createProduct(data))}
+          className="space-y-8"
+        >
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* Left Column - Main Content */}
             <div className="space-y-4 lg:col-span-2">
@@ -114,13 +142,12 @@ export function AddProduct() {
                       </FormItem>
                     )}
                   />
-
                   <FormField
                     control={form.control}
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>Description</FormLabel>
                         <FormControl>
                           <Input placeholder="Enter your name" {...field} />
                         </FormControl>
@@ -131,7 +158,6 @@ export function AddProduct() {
                   />
                 </CardContent>
               </Card>
-
               {/* Media Section */}
               <Card>
                 <CardHeader>
@@ -147,7 +173,6 @@ export function AddProduct() {
                       name="thumbnail"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name</FormLabel>
                           <FormControl>
                             <Input
                               type="file"
@@ -165,7 +190,6 @@ export function AddProduct() {
                   </div>
                 </CardContent>
               </Card>
-
               {/* Variation Section */}
               <Card>
                 <CardHeader>
@@ -234,7 +258,6 @@ export function AddProduct() {
                   </div>
                 </CardContent>
               </Card>
-
               {/* Pricing Section */}
               <Card>
                 <CardHeader>
@@ -246,7 +269,7 @@ export function AddProduct() {
                     name="basePrice"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>Base price</FormLabel>
                         <FormControl>
                           <Input placeholder="Enter your name" {...field} />
                         </FormControl>
@@ -268,12 +291,13 @@ export function AddProduct() {
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                           {...field}
+                          className="flex items-center gap-5 max-w-max"
                         >
                           <Field orientation="horizontal">
                             <RadioGroupItem value="none" id="no-discount" />
                             <FieldLabel
                               htmlFor="no-discount"
-                              className="font-normal"
+                              className="font-normal whitespace-nowrap"
                             >
                               No Discount
                             </FieldLabel>
@@ -285,7 +309,7 @@ export function AddProduct() {
                             />
                             <FieldLabel
                               htmlFor="percentage"
-                              className="font-normal"
+                              className="font-normal whitespace-nowrap"
                             >
                               Percentage %
                             </FieldLabel>
@@ -294,7 +318,7 @@ export function AddProduct() {
                             <RadioGroupItem value="fixed" id="fixed-price" />
                             <FieldLabel
                               htmlFor="fixed-price"
-                              className="font-normal"
+                              className="font-normal whitespace-nowrap"
                             >
                               Fixed Price
                             </FieldLabel>
@@ -303,7 +327,6 @@ export function AddProduct() {
                       )}
                     />
                   </FieldSet>
-
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="taxClass">
@@ -325,18 +348,16 @@ export function AddProduct() {
                           </Select>
                         )}
                       />
-
                       <p className="text-muted-foreground text-sm">
                         Set the product tax class.
                       </p>
                     </div>
-
                     <FormField
                       control={form.control}
                       name="vatAmount"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Name</FormLabel>
+                          <FormLabel>Vat</FormLabel>
                           <FormControl>
                             <Input placeholder="Enter your name" {...field} />
                           </FormControl>
@@ -349,7 +370,6 @@ export function AddProduct() {
                 </CardContent>
               </Card>
             </div>
-
             {/* Right Column - Sidebar */}
             <div className="space-y-4">
               {/* Thumbnail Section */}
@@ -372,7 +392,6 @@ export function AddProduct() {
                   </p>
                 </CardContent>
               </Card>
-
               {/* Status Section */}
               <Card>
                 <CardHeader>
@@ -416,7 +435,7 @@ export function AddProduct() {
                     <div className="mt-2 flex flex-wrap gap-2">
                       {categoryField.map((category, index) => (
                         <Badge
-                          key={index}
+                          key={category.id}
                           variant="secondary"
                           className="bg-purple-100 text-purple-700"
                         >
@@ -430,21 +449,147 @@ export function AddProduct() {
                         </Badge>
                       ))}
                     </div>
-                    <p className="text-muted-foreground mt-1 text-xs">
-                      Add product to a category.
-                    </p>
                     <div className="mt-2 flex gap-2">
-                      <Input
-                        placeholder="New category"
-                        onChange={(e) => setNewCategory(e.target.value)}
-                        className="flex-1"
+                      <FormField
+                        control={form.control}
+                        name="categories"
+                        render={() => (
+                          <FormItem className="flex-1">
+                            <FormControl>
+                              <div className="flex gap-2">
+                                {category.length > 0 && (
+                                  <Select
+                                    value={selectedCategory}
+                                    onValueChange={(value) => {
+                                      categoryRemove(0);
+                                      categoryAppend({ name: value });
+                                      setSelectedCategory(value);
+                                    }}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select a category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {category.map((cat) => (
+                                        <SelectItem
+                                          key={cat.id}
+                                          value={cat.name}
+                                        >
+                                          {cat.name}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                )}
+                                <Input
+                                  value={newCategory}
+                                  placeholder="New category"
+                                  onChange={(e) =>
+                                    setNewCategory(e.target.value)
+                                  }
+                                />
+                              </div>
+                            </FormControl>
+                            <FormDescription>
+                              Add product to a category.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
                       <Button
                         type="button"
                         variant="outline"
-                        onClick={() => categoryAppend({ name: newCategory })}
+                        onClick={() => {
+                          categoryRemove(0);
+                          categoryAppend({ name: newCategory });
+                          setNewCategory("");
+                          setSelectedCategory("");
+                        }}
                       >
-                        <PlusIcon /> Create New Category
+                        <PlusIcon />
+                        New Category
+                      </Button>
+                    </div>
+                  </div>
+                  <Separator />
+                  <div>
+                    <Label className="text-sm font-medium">Brands</Label>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {brandField.map((barand, index) => (
+                        <Badge
+                          key={barand.id}
+                          variant="secondary"
+                          className="bg-purple-100 text-purple-700"
+                        >
+                          <span
+                            className="mr-1 cursor-pointer"
+                            onClick={() => brandRemove(index)}
+                          >
+                            ×
+                          </span>
+                          {barand.name}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="mt-2 flex gap-2">
+                      <FormField
+                        control={form.control}
+                        name="brands"
+                        render={() => (
+                          <FormItem className="flex-1">
+                            <FormControl>
+                              <div className="flex gap-2">
+                                {brand.length > 0 && (
+                                  <Select
+                                    value={selectedBrand}
+                                    onValueChange={(value) => {
+                                      brandRemove(0);
+                                      brandAppend({ name: value });
+                                      setSelectedBrand(value);
+                                    }}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Select a brand" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {brand.map((bra) => (
+                                        <SelectItem
+                                          key={bra.id}
+                                          value={bra.name}
+                                        >
+                                          {bra.name}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                )}
+                                <Input
+                                  value={newBrand}
+                                  placeholder="New brand"
+                                  onChange={(e) => setNewBrand(e.target.value)}
+                                />
+                              </div>
+                            </FormControl>
+                            <FormDescription>
+                              Add product to a brand.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => {
+                          brandRemove(0);
+                          brandAppend({ name: newBrand });
+                          setNewBrand("");
+                          setSelectedBrand("");
+                        }}
+                      >
+                        <PlusIcon />
+                        New Brand
                       </Button>
                     </div>
                   </div>
