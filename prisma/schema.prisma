@@ -66,6 +66,7 @@ model Product {
   description  String?
   status       Status     @default(published)
   thumbnail    String
+  images       String[]
   basePrice    String
   discountType Discount   @default(none)
   template     Template   @default(default)

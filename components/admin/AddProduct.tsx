@@ -41,6 +41,8 @@ import { Separator } from "@/components/ui/separator";
 import { productFormSchema, type ProductFormData } from "@/lib/zod";
 import { PlusIcon, XIcon } from "lucide-react";
 import { createProduct } from "@/actions/products";
+import { ImagesUpload } from "./ImagesUpload";
+import { ThumbnailUpload } from "./ThumbnailUpload";
 
 interface Category {
   id: number;
@@ -133,11 +135,10 @@ export function AddProduct({
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>Product Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your name" {...field} />
+                          <Input placeholder="Product name" {...field} />
                         </FormControl>
-                        <FormDescription>This is your name.</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -149,9 +150,8 @@ export function AddProduct({
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your name" {...field} />
+                          <Input placeholder="Enter description" {...field} />
                         </FormControl>
-                        <FormDescription>This is your name.</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -164,30 +164,9 @@ export function AddProduct({
                   <CardTitle>Media</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="rounded-lg border-2 border-dashed border-purple-300 bg-purple-50 p-12 text-center">
-                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center text-2xl text-purple-400">
-                      📁
-                    </div>
-                    <FormField
-                      control={form.control}
-                      name="thumbnail"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              type="file"
-                              onChange={(e) =>
-                                field.onChange(e.target.files?.[0])
-                              }
-                            />
-                          </FormControl>
-                          <FormDescription>This is your name.</FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <p className="text-purple-600">Drop files here to upload</p>
-                  </div>
+                  <ImagesUpload
+                    onFilesChange={(files) => form.setValue("images", files)}
+                  />
                 </CardContent>
               </Card>
               {/* Variation Section */}
@@ -271,9 +250,8 @@ export function AddProduct({
                       <FormItem>
                         <FormLabel>Base price</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your name" {...field} />
+                          <Input placeholder="Price" {...field} />
                         </FormControl>
-                        <FormDescription>This is your name.</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -361,7 +339,6 @@ export function AddProduct({
                           <FormControl>
                             <Input placeholder="Enter your name" {...field} />
                           </FormControl>
-                          <FormDescription>This is your name.</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -378,18 +355,9 @@ export function AddProduct({
                   <CardTitle>Thumbnail</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="rounded-lg border-2 border-dashed border-purple-300 bg-purple-50 p-8 text-center">
-                    <div className="mx-auto mb-2 flex h-8 w-8 items-center justify-center text-xl text-purple-400">
-                      🖼️
-                    </div>
-                    <p className="text-sm text-purple-600">
-                      Drop Thumbnail here to upload
-                    </p>
-                  </div>
-                  <p className="text-muted-foreground mt-2 text-xs">
-                    Set the product thumbnail image. Only *.png, *.jpg and
-                    *.jpeg image files are accepted.
-                  </p>
+                  <ThumbnailUpload
+                    onImageChange={(image) => form.setValue("thumbnail", image)}
+                  />
                 </CardContent>
               </Card>
               {/* Status Section */}
@@ -441,7 +409,10 @@ export function AddProduct({
                         >
                           <span
                             className="mr-1 cursor-pointer"
-                            onClick={() => categoryRemove(index)}
+                            onClick={() => {
+                              categoryRemove(index);
+                              setSelectedCategory("");
+                            }}
                           >
                             ×
                           </span>
@@ -490,9 +461,6 @@ export function AddProduct({
                                 />
                               </div>
                             </FormControl>
-                            <FormDescription>
-                              Add product to a category.
-                            </FormDescription>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -524,7 +492,10 @@ export function AddProduct({
                         >
                           <span
                             className="mr-1 cursor-pointer"
-                            onClick={() => brandRemove(index)}
+                            onClick={() => {
+                              brandRemove(index);
+                              setSelectedBrand("");
+                            }}
                           >
                             ×
                           </span>
@@ -571,9 +542,6 @@ export function AddProduct({
                                 />
                               </div>
                             </FormControl>
-                            <FormDescription>
-                              Add product to a brand.
-                            </FormDescription>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -644,7 +612,7 @@ export function AddProduct({
             </div>
           </div>
           <div className="flex gap-3">
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Save product</Button>
             <Button type="button" variant="destructive">
               Cancel
             </Button>

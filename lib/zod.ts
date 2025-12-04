@@ -52,12 +52,8 @@ export const productFormSchema = z.object({
   name: z.string().min(1, "Product name is required"),
   description: z.string().optional(),
   status: z.enum(["published", "draft", "archived"]),
-  thumbnail: z.instanceof(File, { message: "Image is required." })
-    .refine((file) => file.size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
-    .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-      "Only .jpg, .jpeg, .png and .webp formats are supported."
-    ),
+  thumbnail: z.any(),
+  images: z.any(),
   categories: z.array(
     z.object({
       name: z.string()
