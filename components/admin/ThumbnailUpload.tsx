@@ -32,13 +32,13 @@ export function ThumbnailUpload({
   onImageChange,
 }: CoverUploadProps) {
   // Default cover image
-  const defaultCoverImage: FileMetadata = {
-    id: "default-cover",
-    name: "cover-image.jpg",
-    size: 2048000,
-    type: "image/jpeg",
-    url: "https://picsum.photos/1000/800?grayscale&random=3",
-  };
+  // const defaultCoverImage: FileMetadata = {
+  //   id: "default-cover",
+  //   name: "cover-image.jpg",
+  //   size: 2048000,
+  //   type: "image/jpeg",
+  //   url: "https://picsum.photos/1000/800?grayscale&random=3",
+  // };
 
   const [coverImage, setCoverImage] = useState<FileWithPreview | null>();
 
