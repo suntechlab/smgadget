@@ -23,7 +23,7 @@ const data = {
   user: {
     name: "Shohag",
     email: "admin@smgadgetbd.com",
-    avatar: "/noAvatar.png",
+    avatar: "/noavatar.png",
   },
   navMain: [
     {

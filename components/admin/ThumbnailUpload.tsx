@@ -3,9 +3,11 @@
 import { useState } from "react";
 import {
   useFileUpload,
-  type FileMetadata,
   type FileWithPreview,
 } from "@/hooks/use-file-upload";
+// import {
+//   type FileMetadata,
+// } from "@/hooks/use-file-upload";
 import {
   Alert,
   AlertContent,
