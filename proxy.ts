@@ -3,9 +3,9 @@
 import authConfig from "@/auth.config"
 import NextAuth from "next-auth"
 
-export const { auth: middleware } = NextAuth(authConfig)
+const { auth: proxy } = NextAuth(authConfig)
 // const { auth } = NextAuth(authConfig)
-// export default auth(async function middleware(request: NextRequest) {
+// export default auth(async function proxy(request: NextRequest) {
 //     const currentUser = request.cookies.get('authjs.session-token')?.value
  
 //     if (currentUser && !request.nextUrl.pathname.startsWith('/dashboard')) {
@@ -20,3 +20,5 @@ export const { auth: middleware } = NextAuth(authConfig)
 // export const config = {
 //   matcher: ['/signin/:path*','/dashboard/:path*']
 // }
+
+export default proxy
